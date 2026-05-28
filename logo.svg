@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" role="img" aria-label="Suburban Vermin">
+  <defs>
+    <!-- Text arcs at radius 163 from centre 200,200 -->
+    <!-- SUBURBAN: clockwise over top, θ 200°→340° (140° arc) -->
+    <path id="top"
+      d="M 46.8,144.3
+         A 163,163 0 0,1 353.2,144.3"/>
+    <!-- VERMIN: counter-clockwise through bottom, θ 130°→50° (80° arc) -->
+    <path id="bot"
+      d="M 95.2,324.9
+         A 163,163 0 0,0 304.8,324.9"/>
+    <!-- Clip to Union Jack circle -->
+    <clipPath id="fc">
+      <circle cx="200" cy="200" r="141"/>
+    </clipPath>
+  </defs>
+
+  <!-- ── Outer black disc ── -->
+  <circle cx="200" cy="200" r="197" fill="#111111"/>
+
+  <!-- ── Outer cream separator ring ── -->
+  <circle cx="200" cy="200" r="185" fill="none" stroke="#d9d4c0" stroke-width="2.5"/>
+
+  <!-- ── Inner cream separator ring ── -->
+  <circle cx="200" cy="200" r="143" fill="none" stroke="#d9d4c0" stroke-width="2.5"/>
+
+  <!-- ─────────────────────────────────────
+       UNION JACK — built inside clip r=141
+  ───────────────────────────────────────── -->
+
+  <!-- Blue field -->
+  <circle cx="200" cy="200" r="141" fill="#1c3272"/>
+
+  <!-- ── White St Andrew's saltire (diagonals) ── -->
+  <line x1="59" y1="59" x2="341" y2="341"
+        stroke="#dbd6c2" stroke-width="52"
+        clip-path="url(#fc)"/>
+  <line x1="341" y1="59" x2="59" y2="341"
+        stroke="#dbd6c2" stroke-width="52"
+        clip-path="url(#fc)"/>
+
+  <!-- ── Red St Patrick's saltire — counterchanged polygons ──
+       In each quadrant the red runs on the UPPER/NORTHERN side
+       of the white diagonal band.
+  ── -->
+  <!-- NW–SE stripe: red on upper-left (north) side -->
+  <polygon points="200,200 59,59 59,159 200,200"   fill="#8a1a1a" clip-path="url(#fc)"/>
+  <polygon points="200,200 341,341 341,241 200,200" fill="#8a1a1a" clip-path="url(#fc)"/>
+
+  <!-- NE–SW stripe: red on upper-right (north) side -->
+  <polygon points="200,200 341,59 241,59 200,200"   fill="#8a1a1a" clip-path="url(#fc)"/>
+  <polygon points="200,200 59,341 159,341 200,200"  fill="#8a1a1a" clip-path="url(#fc)"/>
+
+  <!-- ── White St George cross (with white border) ── -->
+  <rect x="174" y="59"  width="52" height="282" fill="#dbd6c2" clip-path="url(#fc)"/>
+  <rect x="59"  y="174" width="282" height="52" fill="#dbd6c2" clip-path="url(#fc)"/>
+
+  <!-- ── Red St George cross ── -->
+  <rect x="183" y="59"  width="34" height="282" fill="#8a1a1a" clip-path="url(#fc)"/>
+  <rect x="59"  y="183" width="282" height="34" fill="#8a1a1a" clip-path="url(#fc)"/>
+
+  <!-- ─────────────────────────────────────
+       CURVED TEXT
+  ───────────────────────────────────────── -->
+  <!-- SUBURBAN  (top arc) -->
+  <text font-family="Impact,'Arial Narrow',Arial,sans-serif"
+        font-size="42" font-weight="900"
+        fill="#dbd6c2" letter-spacing="8">
+    <textPath href="#top" startOffset="50%" text-anchor="middle">SUBURBAN</textPath>
+  </text>
+
+  <!-- VERMIN  (bottom arc) -->
+  <text font-family="Impact,'Arial Narrow',Arial,sans-serif"
+        font-size="44" font-weight="900"
+        fill="#dbd6c2" letter-spacing="14">
+    <textPath href="#bot" startOffset="50%" text-anchor="middle">VERMIN</textPath>
+  </text>
+
+  <!-- Dot separators at 9 o'clock and 3 o'clock -->
+  <circle cx="14"  cy="200" r="5.5" fill="#8a1a1a"/>
+  <circle cx="386" cy="200" r="5.5" fill="#8a1a1a"/>
+</svg>

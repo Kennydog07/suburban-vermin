@@ -1,1334 +1,965 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Suburban Vermin — Dark humour t-shirts for British men who expected more. Prints for the suburban grind." />
-  <meta property="og:title" content="Suburban Vermin — Dark Humour. British. Suburban." />
-  <meta property="og:description" content="T-shirts for men who've stopped pretending life gets better after 35." />
-  <meta property="og:type" content="website" />
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="Suburban Vermin — Dark humour clothing for British men 35–60."/>
   <title>Suburban Vermin — Dark Humour Prints</title>
-
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,600;0,700;1,400&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
-
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Crimson+Pro:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet"/>
   <style>
-    /* ─── RESET & TOKENS ──────────────────────────────────────────────── */
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    /* ─── RESET ─────────────────────────────── */
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{background:#0d0d0b;color:#e2ddd0;font-family:'Crimson Pro',Georgia,serif;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+    a{color:inherit;text-decoration:none}
+    img,svg{display:block;max-width:100%}
 
-    :root {
-      --ink:      #141414;
-      --concrete: #2b2b2b;
-      --ash:      #5a5a5a;
-      --chalk:    #f4f2ee;
-      --bone:     #eae8e3;
-      --paper:    #faf9f7;
-      --blood:    #7a2e2e;
-      --rust:     #9e4a2a;
-      --khaki:    #4a4a35;
-
-      --font-mono: 'IBM Plex Mono', monospace;
-      --font-serif: 'Libre Baskerville', Georgia, serif;
-
-      --gap: clamp(1rem, 3vw, 2.5rem);
-      --section: clamp(4rem, 8vw, 7rem);
-      --radius: 0;
+    /* ─── TOKENS ─────────────────────────────── */
+    :root{
+      --bg:        #0d0d0b;
+      --surface:   #151512;
+      --raised:    #1d1d19;
+      --border:    #2e2e28;
+      --mid:       #6b6b5e;
+      --light:     #e2ddd0;
+      --cream:     #d9d4c0;
+      --red:       #8a1a1a;
+      --red-hi:    #b02222;
+      --navy:      #1c3272;
+      --disp:      'Barlow Condensed',Impact,sans-serif;
+      --body:      'Crimson Pro',Georgia,serif;
+      --gap:       clamp(1rem,3vw,2rem);
     }
+    .wrap{max-width:1200px;margin:0 auto;padding:0 var(--gap)}
 
-    html { scroll-behavior: smooth; }
+    /* ─── KEYFRAMES ──────────────────────────── */
+    @keyframes up{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
+    @keyframes fadein{from{opacity:0}to{opacity:1}}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    @keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 
-    body {
-      font-family: var(--font-serif);
-      background: var(--chalk);
-      color: var(--ink);
-      overflow-x: hidden;
-      -webkit-font-smoothing: antialiased;
-    }
+    .r{opacity:0;transform:translateY(22px);transition:opacity .85s cubic-bezier(.16,1,.3,1),transform .85s cubic-bezier(.16,1,.3,1)}
+    .r.on{opacity:1;transform:none}
+    .d1{transition-delay:.08s}.d2{transition-delay:.16s}.d3{transition-delay:.24s}.d4{transition-delay:.32s}
 
-    img { display: block; max-width: 100%; }
-    a   { color: inherit; text-decoration: none; }
+    /* ─── TOPBAR ─────────────────────────────── */
+    #bar{
+      position:fixed;top:0;left:0;right:0;z-index:100;
+      height:56px;
+      display:flex;align-items:center;justify-content:space-between;
+      padding:0 var(--gap);
+      background:rgba(13,13,11,.93);
+      backdrop-filter:blur(14px);
+      border-bottom:1px solid var(--border);
+      transition:border-color .3s;
+    }
+    #bar.lit{border-bottom-color:var(--red)}
 
-    /* ─── UTILITY ─────────────────────────────────────────────────────── */
-    .mono   { font-family: var(--font-mono); }
-    .serif  { font-family: var(--font-serif); }
-    .wrap   { max-width: 1180px; margin: 0 auto; padding: 0 var(--gap); }
-    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: var(--gap); }
-    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--gap); }
-    .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--gap); }
+    .bar-logo{display:flex;align-items:center;gap:.55rem;cursor:pointer}
+    .bar-logo img{width:38px;height:38px}
+    .bar-logo span{font-family:var(--disp);font-size:1.15rem;font-weight:900;letter-spacing:.08em;color:var(--cream);text-transform:uppercase}
 
-    @media (max-width: 900px) { .grid-3 { grid-template-columns: 1fr 1fr; } }
-    @media (max-width: 720px) {
-      .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
-      .hide-mob { display: none; }
-    }
+    .bar-nav{display:flex;gap:1.8rem;align-items:center}
+    .bar-nav a{font-family:var(--disp);font-size:.8rem;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--mid);transition:color .2s}
+    .bar-nav a:hover{color:var(--light)}
+    .bar-shop{background:var(--red);color:var(--cream)!important;padding:.42rem 1.1rem;transition:background .2s!important}
+    .bar-shop:hover{background:var(--red-hi)!important}
 
-    /* ─── ANIMATIONS ─────────────────────────────────────────────────── */
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(22px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to   { opacity: 1; }
-    }
-    @keyframes marquee {
-      from { transform: translateX(0); }
-      to   { transform: translateX(-50%); }
-    }
-    @keyframes blink {
-      0%, 100% { opacity: 1; }
-      50%       { opacity: 0; }
-    }
+    .hbg{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:4px}
+    .hbg span{display:block;width:22px;height:1.5px;background:var(--cream);transition:all .3s}
+    .hbg.o span:nth-child(1){transform:rotate(45deg) translate(5px,5px)}
+    .hbg.o span:nth-child(2){opacity:0}
+    .hbg.o span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
 
-    .reveal {
-      opacity: 0;
-      transform: translateY(20px);
-      transition: opacity 0.8s ease, transform 0.8s ease;
-    }
-    .reveal.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
+    #mob{display:none;position:fixed;inset:56px 0 0;background:var(--bg);z-index:99;
+         padding:2.5rem var(--gap);flex-direction:column;gap:0;border-top:1px solid var(--border)}
+    #mob.o{display:flex}
+    #mob a{font-family:var(--disp);font-size:2rem;font-weight:900;letter-spacing:.04em;
+           color:var(--cream);padding:1rem 0;border-bottom:1px solid var(--border)}
+    #mob a:last-child{border-bottom:none;color:var(--red)}
 
-    /* ─── HEADER ──────────────────────────────────────────────────────── */
-    #header {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 100;
-      background: var(--chalk);
-      border-bottom: 2px solid var(--ink);
-      transition: box-shadow 0.3s;
-    }
-    #header.scrolled { box-shadow: 0 4px 24px rgba(0,0,0,0.12); }
+    @media(max-width:640px){.bar-nav{display:none}.hbg{display:flex}}
 
-    .header-inner {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      height: 64px;
+    /* ─── HERO ───────────────────────────────── */
+    #hero{
+      min-height:100svh;
+      padding-top:56px;
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      position:relative;
+      overflow:hidden;
     }
-
-    .logo {
-      font-family: var(--font-mono);
-      font-size: 1.1rem;
-      font-weight: 700;
-      letter-spacing: -0.03em;
-      text-transform: uppercase;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
+    /* Dramatic diagonal slash */
+    #hero::after{
+      content:'';
+      position:absolute;
+      top:0;bottom:0;left:50%;
+      width:2px;
+      background:linear-gradient(to bottom,transparent 0%,var(--red) 30%,var(--red) 70%,transparent 100%);
+      pointer-events:none;
     }
-    .logo-rat {
-      width: 32px; height: 32px;
-      background: var(--ink);
-      border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1rem;
-      flex-shrink: 0;
+    /* Glow bleed from right col */
+    #hero::before{
+      content:'';
+      position:absolute;
+      right:0;top:0;bottom:0;width:50%;
+      background:radial-gradient(ellipse 70% 60% at 70% 40%,rgba(138,26,26,.18) 0%,transparent 70%);
+      pointer-events:none;
     }
 
-    nav {
-      display: flex;
-      gap: 2rem;
-      align-items: center;
+    .hero-l{
+      display:flex;flex-direction:column;justify-content:center;
+      padding:clamp(3rem,6vw,6rem) calc(var(--gap) + 1rem) clamp(3rem,6vw,6rem) clamp(2rem,5vw,5rem);
     }
-    nav a {
-      font-family: var(--font-mono);
-      font-size: 0.8rem;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--ash);
-      transition: color 0.2s;
+    .h-tag{
+      font-family:var(--disp);font-size:.72rem;font-weight:700;text-transform:uppercase;
+      letter-spacing:.22em;color:var(--red);margin-bottom:1.6rem;
+      display:flex;align-items:center;gap:.6rem;
+      animation:up .7s .2s ease both;
     }
-    nav a:hover { color: var(--blood); }
-    nav a.cta {
-      background: var(--ink);
-      color: var(--chalk);
-      padding: 0.5rem 1.1rem;
-      font-weight: 600;
-      transition: background 0.2s;
-    }
-    nav a.cta:hover { background: var(--blood); color: var(--chalk); }
+    .h-tag::before{content:'';width:2rem;height:1px;background:var(--red)}
 
-    .mob-menu-btn {
-      display: none;
-      flex-direction: column;
-      gap: 5px;
-      background: none;
-      border: none;
-      cursor: pointer;
-      padding: 4px;
+    .h1{
+      font-family:var(--disp);
+      font-size:clamp(3.8rem,8vw,6.2rem);
+      font-weight:900;line-height:.93;
+      letter-spacing:.01em;
+      text-transform:uppercase;
+      color:var(--cream);
+      margin-bottom:1.6rem;
+      animation:up .7s .3s ease both;
     }
-    .mob-menu-btn span {
-      display: block;
-      width: 24px; height: 2px;
-      background: var(--ink);
-      transition: all 0.3s;
+    .h1 .outline{
+      -webkit-text-stroke:1.5px var(--cream);
+      color:transparent;
     }
-    .mob-menu-btn.open span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
-    .mob-menu-btn.open span:nth-child(2) { opacity: 0; }
-    .mob-menu-btn.open span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+    .h1 .red{color:var(--red)}
 
-    #mob-nav {
-      display: none;
-      flex-direction: column;
-      background: var(--chalk);
-      border-top: 1px solid var(--bone);
-      padding: 1.5rem var(--gap);
-      gap: 1.2rem;
+    .h-copy{
+      font-family:var(--body);font-style:italic;font-size:1.05rem;line-height:1.78;
+      color:rgba(226,221,208,.55);max-width:400px;margin-bottom:2.2rem;
+      animation:up .7s .4s ease both;
     }
-    #mob-nav.open { display: flex; }
-    #mob-nav a {
-      font-family: var(--font-mono);
-      font-size: 0.9rem;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
+    .btns{display:flex;gap:.8rem;flex-wrap:wrap;animation:up .7s .5s ease both}
+    .btn{
+      font-family:var(--disp);font-size:.75rem;font-weight:700;text-transform:uppercase;
+      letter-spacing:.12em;padding:.8rem 1.7rem;border:1.5px solid;
+      cursor:pointer;transition:all .25s;display:inline-block;
     }
+    .btn-solid{background:var(--red);color:var(--cream);border-color:var(--red)}
+    .btn-solid:hover{background:var(--red-hi);border-color:var(--red-hi)}
+    .btn-ghost{background:transparent;color:var(--cream);border-color:var(--border)}
+    .btn-ghost:hover{border-color:var(--cream)}
 
-    @media (max-width: 720px) {
-      nav { display: none; }
-      .mob-menu-btn { display: flex; }
+    .hero-r{
+      display:flex;flex-direction:column;align-items:center;justify-content:center;
+      padding:4rem var(--gap);
+      position:relative;z-index:1;
     }
-
-    /* ─── TICKER ──────────────────────────────────────────────────────── */
-    .ticker {
-      background: var(--ink);
-      color: var(--chalk);
-      overflow: hidden;
-      white-space: nowrap;
-      padding: 0.55rem 0;
-      border-top: 2px solid var(--blood);
+    .logo-ring-wrap{
+      position:relative;
+      width:clamp(220px,36vw,340px);
+      animation:fadein 1.2s .4s ease both;
     }
-    .ticker-track {
-      display: inline-flex;
-      gap: 0;
-      animation: marquee 28s linear infinite;
+    .logo-ring-wrap img{width:100%;height:auto;filter:drop-shadow(0 0 40px rgba(138,26,26,.4))}
+    .spin-ring{
+      position:absolute;inset:-18px;border-radius:50%;
+      border:1px dashed rgba(138,26,26,.35);
+      animation:spin 60s linear infinite;
     }
-    .ticker span {
-      font-family: var(--font-mono);
-      font-size: 0.7rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      padding: 0 3rem;
-      color: var(--bone);
-    }
-    .ticker span.sep { color: var(--blood); padding: 0; }
-
-    /* ─── HERO ────────────────────────────────────────────────────────── */
-    #hero {
-      padding-top: 64px; /* header height */
-      min-height: 100svh;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      align-items: stretch;
-      border-bottom: 2px solid var(--ink);
+    .spin-ring-2{
+      position:absolute;inset:-32px;border-radius:50%;
+      border:1px dotted rgba(217,212,192,.08);
+      animation:spin 90s linear infinite reverse;
     }
 
-    .hero-left {
-      padding: clamp(3rem, 6vw, 6rem) var(--gap) clamp(3rem, 6vw, 6rem) clamp(1.5rem, 4vw, 4rem);
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      border-right: 2px solid var(--ink);
+    .hero-stats{
+      display:flex;gap:2.5rem;margin-top:2.5rem;
+      animation:up .8s .7s ease both;
+    }
+    .hstat p:first-child{
+      font-family:var(--disp);font-size:2.2rem;font-weight:900;color:var(--cream);line-height:1;
+    }
+    .hstat p:last-child{
+      font-family:var(--disp);font-size:.6rem;font-weight:700;text-transform:uppercase;
+      letter-spacing:.14em;color:var(--mid);margin-top:.2rem;
     }
 
-    .hero-kicker {
-      font-family: var(--font-mono);
-      font-size: 0.7rem;
-      text-transform: uppercase;
-      letter-spacing: 0.14em;
-      color: var(--blood);
-      margin-bottom: 1.5rem;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-    .hero-kicker::before {
-      content: '';
-      display: block;
-      width: 2rem;
-      height: 2px;
-      background: var(--blood);
+    @media(max-width:780px){
+      #hero{grid-template-columns:1fr;min-height:auto}
+      #hero::after{display:none}
+      .hero-l{padding-bottom:0}
+      .hero-r{padding-top:2.5rem;padding-bottom:3rem}
     }
 
-    .hero-h1 {
-      font-family: var(--font-mono);
-      font-size: clamp(2.2rem, 5.5vw, 4rem);
-      font-weight: 700;
-      line-height: 1.08;
-      letter-spacing: -0.03em;
-      margin-bottom: 2rem;
+    /* ─── TICKER ─────────────────────────────── */
+    .tick{
+      background:var(--red);overflow:hidden;white-space:nowrap;
+      padding:.55rem 0;border-top:1px solid rgba(255,255,255,.08);
     }
-    .hero-h1 em {
-      font-style: italic;
-      font-family: var(--font-serif);
-      font-weight: 400;
-      color: var(--blood);
+    .tick-t{display:inline-flex;animation:ticker 28s linear infinite}
+    .tick-t span{
+      font-family:var(--disp);font-size:.68rem;font-weight:700;text-transform:uppercase;
+      letter-spacing:.15em;padding:0 2.2rem;color:rgba(255,255,255,.82);
+    }
+    .tick-t .sep{padding:0;color:rgba(255,255,255,.35)}
+
+    /* ─── DULL DAD ───────────────────────────── */
+    #dd{
+      padding:clamp(4rem,8vw,7rem) 0;
+      background:var(--surface);
+      border-top:1px solid var(--border);
+      position:relative;overflow:hidden;
+    }
+    #dd::before{
+      content:'DULL DAD';
+      position:absolute;top:50%;left:50%;
+      transform:translate(-50%,-50%);
+      font-family:var(--disp);font-size:clamp(5rem,18vw,14rem);font-weight:900;
+      color:rgba(255,255,255,.025);white-space:nowrap;letter-spacing:.04em;
+      pointer-events:none;line-height:1;
     }
 
-    .hero-copy {
-      font-family: var(--font-serif);
-      font-size: 1.05rem;
-      line-height: 1.75;
-      color: var(--ash);
-      max-width: 480px;
-      margin-bottom: 2.5rem;
+    .dd-head{
+      display:flex;align-items:flex-end;justify-content:space-between;
+      gap:1rem;flex-wrap:wrap;
+      margin-bottom:clamp(2.5rem,5vw,4rem);
+      position:relative;z-index:2;
+    }
+    .s-eyebrow{
+      font-family:var(--disp);font-size:.68rem;font-weight:700;text-transform:uppercase;
+      letter-spacing:.2em;color:var(--red);margin-bottom:.6rem;
+      display:flex;align-items:center;gap:.5rem;
+    }
+    .s-eyebrow::before{content:'';width:1.5rem;height:1px;background:var(--red)}
+    .s-h2{
+      font-family:var(--disp);font-size:clamp(3rem,7vw,5rem);font-weight:900;
+      line-height:.93;letter-spacing:.01em;text-transform:uppercase;color:var(--cream);
+    }
+    .dd-aside{
+      font-family:var(--body);font-style:italic;font-size:.95rem;
+      color:rgba(226,221,208,.4);max-width:280px;line-height:1.65;
+      text-align:right;
+    }
+    @media(max-width:600px){.dd-aside{text-align:left;max-width:100%}}
+
+    /* Shirt grid */
+    .shirt-grid{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:2px;
+      background:var(--border);
+      border:2px solid var(--border);
+      position:relative;z-index:2;
+    }
+    @media(max-width:900px){.shirt-grid{grid-template-columns:repeat(2,1fr)}}
+    @media(max-width:440px){.shirt-grid{grid-template-columns:1fr}}
+
+    .shirt{
+      background:#181815;
+      aspect-ratio:3/4;
+      display:flex;flex-direction:column;
+      padding:1.6rem 1.2rem 1.2rem;
+      position:relative;overflow:hidden;
+      cursor:pointer;transition:background .3s;
+      text-decoration:none;color:inherit;
+    }
+    .shirt:hover{background:#201f1b}
+
+    /* Shoulder seam decoration */
+    .shirt::before{
+      content:'';
+      position:absolute;top:0;left:0;right:0;height:3px;
+      background:linear-gradient(90deg,transparent 0%,var(--border) 20%,var(--border) 80%,transparent 100%);
+    }
+    /* Collar notch */
+    .shirt::after{
+      content:'';
+      position:absolute;top:0;left:50%;transform:translateX(-50%);
+      width:32%;height:10px;
+      background:#0d0d0b;
+      border-radius:0 0 40% 40%;
     }
 
-    .btn-row { display: flex; gap: 1rem; flex-wrap: wrap; }
-
-    .btn {
-      font-family: var(--font-mono);
-      font-size: 0.78rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      padding: 0.85rem 1.8rem;
-      border: 2px solid var(--ink);
-      cursor: pointer;
-      transition: all 0.25s;
-      display: inline-block;
-    }
-    .btn-solid { background: var(--ink); color: var(--chalk); }
-    .btn-solid:hover { background: var(--blood); border-color: var(--blood); }
-    .btn-ghost { background: transparent; color: var(--ink); }
-    .btn-ghost:hover { background: var(--ink); color: var(--chalk); }
-
-    .hero-right {
-      background: var(--concrete);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 3rem var(--gap);
-      gap: 2rem;
-      position: relative;
-      overflow: hidden;
-    }
-    .hero-right::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background:
-        repeating-linear-gradient(
-          0deg,
-          transparent,
-          transparent 39px,
-          rgba(255,255,255,0.03) 40px
-        ),
-        repeating-linear-gradient(
-          90deg,
-          transparent,
-          transparent 39px,
-          rgba(255,255,255,0.03) 40px
-        );
+    .shirt-num{
+      position:absolute;bottom:.8rem;left:1rem;
+      font-family:var(--disp);font-size:4rem;font-weight:900;
+      color:rgba(255,255,255,.04);line-height:1;pointer-events:none;
     }
 
-    .hero-statement {
-      position: relative;
-      text-align: center;
-      z-index: 2;
-    }
-    .hero-statement .big {
-      font-family: var(--font-mono);
-      font-size: clamp(3rem, 7vw, 5.5rem);
-      font-weight: 700;
-      color: var(--chalk);
-      line-height: 1;
-      letter-spacing: -0.04em;
-      display: block;
-    }
-    .hero-statement .small {
-      font-family: var(--font-serif);
-      font-size: 0.95rem;
-      font-style: italic;
-      color: rgba(244,242,238,0.5);
-      display: block;
-      margin-top: 0.5rem;
+    .shirt-body{
+      flex:1;display:flex;flex-direction:column;
+      align-items:center;justify-content:center;
+      text-align:center;gap:.35rem;
+      padding-top:.5rem;
     }
 
-    .hero-tags {
-      display: flex;
-      gap: 0.5rem;
-      flex-wrap: wrap;
-      justify-content: center;
-      position: relative;
-      z-index: 2;
+    /* Design text styles — these ARE the t-shirt designs */
+    .t-small{
+      font-family:var(--disp);font-size:clamp(.55rem,1.2vw,.7rem);font-weight:700;
+      text-transform:uppercase;letter-spacing:.18em;
+      color:rgba(226,221,208,.35);
     }
-    .tag {
-      font-family: var(--font-mono);
-      font-size: 0.65rem;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      padding: 0.35rem 0.75rem;
-      border: 1px solid rgba(255,255,255,0.15);
-      color: rgba(244,242,238,0.6);
+    .t-rule{width:1.8rem;height:1px;background:var(--red);margin:.4rem auto}
+    .t-big{
+      font-family:var(--disp);font-size:clamp(1.2rem,3vw,1.6rem);font-weight:900;
+      text-transform:uppercase;letter-spacing:.03em;color:var(--cream);line-height:.98;
     }
-
-    .hero-scroll {
-      position: absolute;
-      bottom: 2rem;
-      left: 50%;
-      transform: translateX(-50%);
-      font-family: var(--font-mono);
-      font-size: 0.6rem;
-      text-transform: uppercase;
-      letter-spacing: 0.14em;
-      color: rgba(244,242,238,0.3);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 0.4rem;
+    .t-italic{
+      font-family:var(--body);font-style:italic;
+      font-size:clamp(.6rem,1.3vw,.78rem);
+      color:rgba(226,221,208,.35);line-height:1.5;
+      margin-top:.3rem;
     }
-    .hero-scroll::after {
-      content: '';
-      width: 1px;
-      height: 40px;
-      background: rgba(244,242,238,0.2);
-      display: block;
+    .t-sub{
+      font-family:var(--disp);font-size:clamp(.6rem,1.2vw,.72rem);font-weight:700;
+      text-transform:uppercase;letter-spacing:.12em;color:rgba(226,221,208,.4);
     }
 
-    @media (max-width: 720px) {
-      #hero {
-        grid-template-columns: 1fr;
-        min-height: auto;
-      }
-      .hero-left { border-right: none; border-bottom: 2px solid var(--ink); }
-      .hero-right { min-height: 280px; padding: 3rem var(--gap); }
+    .shirt-foot{
+      border-top:1px solid var(--border);padding-top:.75rem;margin-top:.75rem;
+      display:flex;align-items:center;justify-content:space-between;
+    }
+    .s-price{font-family:var(--disp);font-size:.95rem;font-weight:900;color:var(--red)}
+    .s-arr{
+      width:26px;height:26px;background:var(--red);
+      display:flex;align-items:center;justify-content:center;
+      font-size:.72rem;color:var(--cream);transition:background .2s;
+    }
+    .shirt:hover .s-arr{background:var(--red-hi)}
+
+    .dd-foot{
+      margin-top:2.5rem;
+      display:flex;align-items:center;gap:2rem;flex-wrap:wrap;
+      position:relative;z-index:2;
+    }
+    .dd-foot-note{
+      font-family:var(--body);font-style:italic;font-size:.9rem;
+      color:rgba(226,221,208,.3);
     }
 
-    /* ─── FEATURED PRODUCTS ───────────────────────────────────────────── */
-    #featured {
-      padding: var(--section) 0;
-      background: var(--paper);
+    /* ─── MANIFESTO ──────────────────────────── */
+    #mani{
+      padding:clamp(4rem,8vw,6rem) 0;
+      background:var(--red);
+      border-top:1px solid rgba(0,0,0,.2);
+      position:relative;overflow:hidden;
+    }
+    #mani::before{
+      content:'"';
+      position:absolute;top:-3rem;left:1.5rem;
+      font-family:var(--disp);font-size:22rem;font-weight:900;line-height:1;
+      color:rgba(0,0,0,.12);pointer-events:none;
+    }
+    .mani-inner{
+      display:grid;grid-template-columns:1fr 2fr;gap:4rem;align-items:center;
+      position:relative;z-index:2;
+    }
+    @media(max-width:680px){.mani-inner{grid-template-columns:1fr;gap:2rem}}
+    .mani-label{
+      font-family:var(--disp);font-size:.65rem;font-weight:700;text-transform:uppercase;
+      letter-spacing:.2em;color:rgba(255,255,255,.45);margin-bottom:1rem;
+    }
+    .mani-head{
+      font-family:var(--disp);font-size:clamp(2.2rem,4.5vw,3.2rem);font-weight:900;
+      text-transform:uppercase;line-height:.95;color:var(--cream);letter-spacing:.02em;
+    }
+    .mani-quote{
+      font-family:var(--body);font-style:italic;
+      font-size:clamp(1.15rem,2.5vw,1.5rem);line-height:1.72;
+      color:rgba(255,255,255,.82);
+    }
+    .mani-quote b{
+      font-style:normal;font-family:var(--disp);font-weight:900;letter-spacing:.05em;
+      color:var(--cream);font-size:.9em;
     }
 
-    .section-head {
-      display: flex;
-      align-items: flex-end;
-      justify-content: space-between;
-      margin-bottom: clamp(2rem, 4vw, 3.5rem);
-      gap: 1rem;
-      flex-wrap: wrap;
+    /* ─── OTHER COLLECTIONS ──────────────────── */
+    #colls{
+      padding:clamp(4rem,8vw,6rem) 0;
+      background:var(--bg);
+      border-top:1px solid var(--border);
     }
-    .section-label {
-      font-family: var(--font-mono);
-      font-size: 0.7rem;
-      text-transform: uppercase;
-      letter-spacing: 0.14em;
-      color: var(--blood);
-      margin-bottom: 0.6rem;
+    .colls-head{
+      display:flex;align-items:flex-end;justify-content:space-between;
+      flex-wrap:wrap;gap:1rem;margin-bottom:2.5rem;
     }
-    .section-h2 {
-      font-family: var(--font-mono);
-      font-size: clamp(1.6rem, 3.5vw, 2.4rem);
-      font-weight: 700;
-      letter-spacing: -0.03em;
-      line-height: 1.1;
+    .colls-h2{
+      font-family:var(--disp);font-size:clamp(2.2rem,5vw,3.5rem);font-weight:900;
+      text-transform:uppercase;color:var(--cream);line-height:.95;letter-spacing:.01em;
     }
-    .section-sub {
-      font-family: var(--font-serif);
-      font-style: italic;
-      font-size: 1rem;
-      color: var(--ash);
-      margin-top: 0.4rem;
+    .colls-link{
+      font-family:var(--disp);font-size:.72rem;font-weight:700;text-transform:uppercase;
+      letter-spacing:.12em;color:var(--mid);border-bottom:1px solid var(--border);
+      padding-bottom:2px;transition:color .2s,border-color .2s;
     }
-    .section-link {
-      font-family: var(--font-mono);
-      font-size: 0.72rem;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      border-bottom: 2px solid var(--ink);
-      padding-bottom: 2px;
-      white-space: nowrap;
-      transition: color 0.2s, border-color 0.2s;
-    }
-    .section-link:hover { color: var(--blood); border-color: var(--blood); }
+    .colls-link:hover{color:var(--cream);border-color:var(--cream)}
 
-    /* Product grid */
-    .products-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1.5px;
-      background: var(--ink);
-      border: 1.5px solid var(--ink);
+    .coll-grid{
+      display:grid;grid-template-columns:repeat(4,1fr);
+      gap:2px;background:var(--border);border:2px solid var(--border);
     }
-    @media (max-width: 900px) { .products-grid { grid-template-columns: 1fr 1fr; } }
-    @media (max-width: 500px) { .products-grid { grid-template-columns: 1fr; } }
+    @media(max-width:900px){.coll-grid{grid-template-columns:repeat(2,1fr)}}
+    @media(max-width:440px){.coll-grid{grid-template-columns:1fr}}
 
-    .p-card {
-      background: var(--chalk);
-      display: flex;
-      flex-direction: column;
-      cursor: pointer;
-      transition: background 0.2s;
-      text-decoration: none;
-      color: inherit;
+    .coll-card{
+      background:var(--raised);padding:2rem 1.5rem;
+      display:flex;flex-direction:column;min-height:200px;
+      position:relative;overflow:hidden;cursor:pointer;
+      transition:background .2s;text-decoration:none;color:inherit;
     }
-    .p-card:hover { background: var(--bone); }
+    .coll-card:hover{background:#222218}
+    .coll-big-num{
+      position:absolute;top:0;right:.5rem;
+      font-family:var(--disp);font-size:5rem;font-weight:900;
+      color:rgba(255,255,255,.04);line-height:1;pointer-events:none;
+    }
+    .coll-tag{
+      font-family:var(--disp);font-size:.6rem;font-weight:700;text-transform:uppercase;
+      letter-spacing:.16em;color:var(--red);margin-bottom:.7rem;
+    }
+    .coll-name{
+      font-family:var(--disp);font-size:clamp(1.1rem,2.5vw,1.5rem);font-weight:900;
+      text-transform:uppercase;color:var(--cream);line-height:1.0;margin-bottom:.6rem;
+    }
+    .coll-desc{
+      font-family:var(--body);font-style:italic;font-size:.82rem;
+      color:rgba(226,221,208,.38);line-height:1.6;flex:1;
+    }
+    .coll-foot{
+      margin-top:1.2rem;display:flex;align-items:center;justify-content:space-between;
+      border-top:1px solid var(--border);padding-top:.7rem;
+    }
+    .coll-count{
+      font-family:var(--disp);font-size:.6rem;font-weight:700;text-transform:uppercase;
+      letter-spacing:.12em;color:var(--mid);
+    }
+    .coll-arr{color:var(--red);font-size:.9rem;transition:color .2s}
+    .coll-card:hover .coll-arr{color:var(--red-hi)}
 
-    .p-card-visual {
-      aspect-ratio: 1;
-      background: var(--concrete);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-      overflow: hidden;
+    /* ─── ABOUT STRIP ────────────────────────── */
+    #abt{
+      padding:clamp(4rem,8vw,6rem) 0;
+      background:var(--surface);
+      border-top:1px solid var(--border);
     }
-    .p-card-visual .icon {
-      font-size: 4rem;
-      line-height: 1;
-      filter: grayscale(1) brightness(0.8);
-      transition: filter 0.3s, transform 0.3s;
+    .abt-grid{
+      display:grid;grid-template-columns:1fr 1fr;
+      gap:clamp(2rem,5vw,5rem);align-items:center;
     }
-    .p-card:hover .p-card-visual .icon {
-      filter: none;
-      transform: scale(1.1);
-    }
-    .p-card-visual .coll-badge {
-      position: absolute;
-      top: 0.75rem; left: 0.75rem;
-      font-family: var(--font-mono);
-      font-size: 0.6rem;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      background: var(--blood);
-      color: var(--chalk);
-      padding: 0.25rem 0.5rem;
-    }
+    @media(max-width:680px){.abt-grid{grid-template-columns:1fr}}
 
-    .p-card-info {
-      padding: 1rem 1.1rem 1.2rem;
-      border-top: 1.5px solid var(--ink);
-      flex: 1;
-      display: flex;
-      flex-direction: column;
+    .abt-logo-side{
+      display:flex;align-items:center;justify-content:center;
     }
-    .p-card-title {
-      font-family: var(--font-mono);
-      font-size: 0.85rem;
-      font-weight: 600;
-      line-height: 1.3;
-      margin-bottom: 0.35rem;
+    .abt-logo-side img{
+      width:min(300px,100%);
+      filter:drop-shadow(0 0 60px rgba(138,26,26,.35));
     }
-    .p-card-desc {
-      font-family: var(--font-serif);
-      font-style: italic;
-      font-size: 0.8rem;
-      color: var(--ash);
-      flex: 1;
-      line-height: 1.4;
-      margin-bottom: 0.75rem;
+    .abt-h2{
+      font-family:var(--disp);font-size:clamp(2rem,4.5vw,3rem);font-weight:900;
+      text-transform:uppercase;color:var(--cream);line-height:.95;
+      letter-spacing:.01em;margin-bottom:1.5rem;
     }
-    .p-card-bottom {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+    .abt-h2 span{color:var(--red)}
+    .abt-p{
+      font-family:var(--body);font-style:italic;font-size:.97rem;
+      line-height:1.85;color:rgba(226,221,208,.5);margin-bottom:.9rem;
     }
-    .p-card-price {
-      font-family: var(--font-mono);
-      font-size: 0.9rem;
-      font-weight: 700;
-      color: var(--blood);
+    .pillars{
+      display:grid;grid-template-columns:1fr 1fr;gap:1px;
+      background:var(--border);border:1px solid var(--border);
+      margin-top:2rem;
     }
-    .p-card-arrow {
-      width: 28px; height: 28px;
-      background: var(--ink);
-      color: var(--chalk);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 0.8rem;
-      transition: background 0.2s;
+    .pill{
+      background:var(--raised);padding:1rem;transition:background .2s;
     }
-    .p-card:hover .p-card-arrow { background: var(--blood); }
+    .pill:hover{background:#202019}
+    .pill-h{
+      font-family:var(--disp);font-size:.65rem;font-weight:700;
+      text-transform:uppercase;letter-spacing:.14em;color:var(--red);margin-bottom:.35rem;
+    }
+    .pill-b{
+      font-family:var(--body);font-size:.82rem;line-height:1.6;
+      color:rgba(226,221,208,.38);
+    }
+    .abt-btns{margin-top:2rem;display:flex;gap:.8rem;flex-wrap:wrap}
 
-    /* ─── BRAND STATEMENT ─────────────────────────────────────────────── */
-    #statement {
-      background: var(--ink);
-      padding: var(--section) 0;
-      overflow: hidden;
+    /* ─── EMAIL ──────────────────────────────── */
+    #email{
+      padding:clamp(4rem,8vw,6rem) 0;
+      background:var(--bg);
+      border-top:1px solid var(--border);
+      position:relative;overflow:hidden;
     }
-    .statement-grid {
-      display: grid;
-      grid-template-columns: 1fr 1.4fr;
-      gap: 0;
-      border: 1.5px solid rgba(255,255,255,0.1);
+    #email::before{
+      content:'VERMIN';
+      position:absolute;right:-1rem;top:50%;transform:translateY(-50%);
+      font-family:var(--disp);font-size:clamp(5rem,16vw,12rem);font-weight:900;
+      color:rgba(255,255,255,.02);pointer-events:none;line-height:1;
     }
-    .statement-left {
-      border-right: 1.5px solid rgba(255,255,255,0.1);
-      padding: 3rem;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
+    .email-inner{max-width:540px;position:relative;z-index:2}
+    .email-h2{
+      font-family:var(--disp);font-size:clamp(2.2rem,5vw,3.2rem);font-weight:900;
+      text-transform:uppercase;color:var(--cream);line-height:.95;margin-bottom:.8rem;
     }
-    .statement-tag {
-      font-family: var(--font-mono);
-      font-size: 0.65rem;
-      text-transform: uppercase;
-      letter-spacing: 0.15em;
-      color: var(--blood);
-      margin-bottom: 1.2rem;
+    .email-sub{
+      font-family:var(--body);font-style:italic;font-size:.97rem;
+      color:rgba(226,221,208,.38);line-height:1.75;margin-bottom:2rem;
     }
-    .statement-h2 {
-      font-family: var(--font-mono);
-      font-size: clamp(1.6rem, 3vw, 2.2rem);
-      font-weight: 700;
-      color: var(--chalk);
-      line-height: 1.1;
-      letter-spacing: -0.03em;
+    .email-form{display:flex;gap:0;max-width:460px}
+    .email-in{
+      flex:1;padding:.85rem 1rem;font-family:var(--disp);font-size:.82rem;
+      background:var(--raised);border:1px solid var(--border);border-right:none;
+      color:var(--cream);outline:none;transition:border-color .2s;letter-spacing:.04em;
     }
-    .statement-h2 em {
-      font-style: italic;
-      font-family: var(--font-serif);
-      font-weight: 400;
-      color: var(--blood);
+    .email-in::placeholder{color:var(--mid)}
+    .email-in:focus{border-color:var(--red)}
+    .email-btn{
+      padding:.85rem 1.3rem;background:var(--red);color:var(--cream);
+      border:1px solid var(--red);font-family:var(--disp);font-size:.72rem;
+      font-weight:700;text-transform:uppercase;letter-spacing:.12em;
+      cursor:pointer;transition:background .2s;white-space:nowrap;
     }
-    .statement-right {
-      padding: 3rem;
-      display: flex;
-      flex-direction: column;
-      gap: 1.5rem;
-      justify-content: center;
+    .email-btn:hover{background:var(--red-hi);border-color:var(--red-hi)}
+    .email-note{
+      font-family:var(--disp);font-size:.6rem;font-weight:400;
+      color:rgba(226,221,208,.18);letter-spacing:.08em;margin-top:.7rem;
     }
-    .statement-p {
-      font-family: var(--font-serif);
-      font-size: 1rem;
-      line-height: 1.8;
-      color: rgba(244,242,238,0.7);
+    .email-ok{
+      display:none;font-family:var(--disp);font-size:.9rem;font-weight:700;
+      letter-spacing:.06em;color:var(--cream);padding:.85rem 1rem;
+      border:1px solid var(--border);max-width:460px;
     }
-    .statement-p strong {
-      color: var(--chalk);
-      font-weight: 700;
-      font-family: var(--font-mono);
-      font-size: 0.9rem;
+    @media(max-width:460px){
+      .email-form{flex-direction:column}
+      .email-in{border-right:1px solid var(--border);border-bottom:none}
     }
 
-    @media (max-width: 720px) {
-      .statement-grid { grid-template-columns: 1fr; }
-      .statement-left { border-right: none; border-bottom: 1.5px solid rgba(255,255,255,0.1); }
+    /* ─── FOOTER ─────────────────────────────── */
+    footer{
+      background:#0a0a09;padding:3rem 0 1.8rem;
+      border-top:1px solid var(--border);
+    }
+    .foot-top{
+      display:grid;grid-template-columns:2fr 1fr 1fr;
+      gap:clamp(2rem,4vw,4rem);margin-bottom:2rem;
+    }
+    @media(max-width:620px){.foot-top{grid-template-columns:1fr}}
+    .foot-logo{display:flex;align-items:center;gap:.6rem;margin-bottom:.9rem}
+    .foot-logo img{width:40px;height:40px}
+    .foot-logo span{
+      font-family:var(--disp);font-size:1.1rem;font-weight:900;
+      letter-spacing:.08em;color:var(--cream);text-transform:uppercase;
+    }
+    .foot-tag{
+      font-family:var(--body);font-style:italic;font-size:.85rem;
+      color:rgba(226,221,208,.28);line-height:1.65;max-width:260px;
+    }
+    .foot-col h5{
+      font-family:var(--disp);font-size:.6rem;font-weight:700;text-transform:uppercase;
+      letter-spacing:.2em;color:var(--red);margin-bottom:1rem;
+    }
+    .foot-col ul{list-style:none;display:flex;flex-direction:column;gap:.55rem}
+    .foot-col ul li a{
+      font-family:var(--disp);font-size:.75rem;font-weight:700;text-transform:uppercase;
+      letter-spacing:.08em;color:rgba(226,221,208,.3);transition:color .2s;
+    }
+    .foot-col ul li a:hover{color:var(--cream)}
+    .foot-bottom{
+      border-top:1px solid var(--border);padding-top:1.5rem;
+      display:flex;align-items:center;justify-content:space-between;
+      flex-wrap:wrap;gap:.6rem;
+    }
+    .foot-bottom p{
+      font-family:var(--disp);font-size:.6rem;font-weight:700;
+      text-transform:uppercase;letter-spacing:.08em;
+      color:rgba(226,221,208,.18);
     }
 
-    /* ─── COLLECTIONS ─────────────────────────────────────────────────── */
-    #collections {
-      padding: var(--section) 0;
-      background: var(--bone);
+    /* ─── SCROLL-TOP ─────────────────────────── */
+    #st{
+      position:fixed;bottom:1.5rem;right:1.5rem;
+      width:40px;height:40px;background:var(--red);
+      border:none;color:var(--cream);font-size:1rem;
+      cursor:pointer;display:flex;align-items:center;justify-content:center;
+      opacity:0;transform:translateY(8px);transition:all .3s;z-index:50;
     }
-
-    .coll-tabs {
-      display: flex;
-      gap: 0;
-      border-bottom: 2px solid var(--ink);
-      overflow-x: auto;
-      margin-bottom: 3rem;
-      scrollbar-width: none;
-    }
-    .coll-tabs::-webkit-scrollbar { display: none; }
-    .coll-tab {
-      font-family: var(--font-mono);
-      font-size: 0.72rem;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      padding: 0.85rem 1.4rem;
-      border: none;
-      background: transparent;
-      cursor: pointer;
-      white-space: nowrap;
-      border-bottom: 3px solid transparent;
-      margin-bottom: -2px;
-      color: var(--ash);
-      transition: all 0.2s;
-    }
-    .coll-tab:hover { color: var(--ink); }
-    .coll-tab.active {
-      color: var(--ink);
-      border-bottom-color: var(--blood);
-      font-weight: 600;
-    }
-
-    .coll-panel { display: none; }
-    .coll-panel.active { display: grid; grid-template-columns: 1fr 1fr; gap: var(--gap); }
-    @media (max-width: 720px) { .coll-panel.active { grid-template-columns: 1fr; } }
-
-    .coll-desc h3 {
-      font-family: var(--font-mono);
-      font-size: clamp(1.4rem, 2.5vw, 1.9rem);
-      font-weight: 700;
-      letter-spacing: -0.03em;
-      line-height: 1.15;
-      margin-bottom: 1rem;
-    }
-    .coll-desc p {
-      font-family: var(--font-serif);
-      font-size: 1rem;
-      line-height: 1.8;
-      color: var(--ash);
-      margin-bottom: 2rem;
-    }
-
-    .coll-items { display: flex; flex-direction: column; gap: 0.6rem; }
-    .coll-item {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      padding: 0.75rem 1rem;
-      background: var(--chalk);
-      border-left: 3px solid transparent;
-      font-family: var(--font-mono);
-      font-size: 0.82rem;
-      transition: all 0.2s;
-    }
-    .coll-item:hover { border-left-color: var(--blood); background: var(--paper); }
-    .coll-item-arrow { color: var(--blood); font-size: 0.7rem; }
-
-    /* ─── ABOUT ───────────────────────────────────────────────────────── */
-    #about {
-      padding: var(--section) 0;
-      background: var(--paper);
-    }
-
-    .about-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: calc(var(--gap) * 2);
-      align-items: start;
-    }
-
-    .about-left .section-label { margin-bottom: 0.5rem; }
-
-    .about-h2 {
-      font-family: var(--font-mono);
-      font-size: clamp(1.8rem, 3.5vw, 2.6rem);
-      font-weight: 700;
-      line-height: 1.08;
-      letter-spacing: -0.03em;
-      margin-bottom: 1.5rem;
-    }
-    .about-h2 em {
-      font-style: italic;
-      font-family: var(--font-serif);
-      font-weight: 400;
-      color: var(--blood);
-    }
-
-    .about-p {
-      font-family: var(--font-serif);
-      font-size: 1rem;
-      line-height: 1.85;
-      color: var(--ash);
-      margin-bottom: 1.2rem;
-    }
-
-    .values { display: flex; flex-direction: column; gap: 0; }
-    .value-item {
-      padding: 1.5rem 0;
-      border-bottom: 1px solid var(--bone);
-      display: flex;
-      gap: 1.2rem;
-    }
-    .value-item:first-child { border-top: 1px solid var(--bone); }
-    .value-num {
-      font-family: var(--font-mono);
-      font-size: 0.65rem;
-      color: var(--blood);
-      font-weight: 700;
-      flex-shrink: 0;
-      padding-top: 3px;
-    }
-    .value-text h4 {
-      font-family: var(--font-mono);
-      font-size: 0.9rem;
-      font-weight: 700;
-      margin-bottom: 0.4rem;
-    }
-    .value-text p {
-      font-family: var(--font-serif);
-      font-size: 0.9rem;
-      line-height: 1.65;
-      color: var(--ash);
-    }
-
-    @media (max-width: 720px) { .about-grid { grid-template-columns: 1fr; } }
-
-    /* ─── EMAIL CTA ───────────────────────────────────────────────────── */
-    #email {
-      background: var(--ink);
-      padding: var(--section) 0;
-      position: relative;
-      overflow: hidden;
-    }
-    #email::before {
-      content: 'SUBURBAN VERMIN';
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      font-family: var(--font-mono);
-      font-size: clamp(4rem, 12vw, 9rem);
-      font-weight: 700;
-      color: rgba(255,255,255,0.02);
-      white-space: nowrap;
-      letter-spacing: -0.04em;
-      pointer-events: none;
-    }
-
-    .email-inner {
-      text-align: center;
-      position: relative;
-      z-index: 2;
-      max-width: 600px;
-      margin: 0 auto;
-    }
-    .email-inner .section-label { justify-content: center; display: flex; }
-    .email-h2 {
-      font-family: var(--font-mono);
-      font-size: clamp(1.8rem, 3.5vw, 2.6rem);
-      font-weight: 700;
-      color: var(--chalk);
-      line-height: 1.1;
-      letter-spacing: -0.03em;
-      margin: 0.75rem 0 1rem;
-    }
-    .email-sub {
-      font-family: var(--font-serif);
-      font-style: italic;
-      font-size: 1rem;
-      color: rgba(244,242,238,0.5);
-      margin-bottom: 2.5rem;
-    }
-
-    .email-form {
-      display: flex;
-      gap: 0;
-      max-width: 480px;
-      margin: 0 auto;
-    }
-    .email-input {
-      flex: 1;
-      padding: 0.9rem 1.2rem;
-      font-family: var(--font-mono);
-      font-size: 0.85rem;
-      background: rgba(255,255,255,0.07);
-      border: 2px solid rgba(255,255,255,0.2);
-      border-right: none;
-      color: var(--chalk);
-      outline: none;
-      transition: border-color 0.2s;
-    }
-    .email-input::placeholder { color: rgba(244,242,238,0.3); }
-    .email-input:focus { border-color: var(--blood); }
-
-    .email-btn {
-      padding: 0.9rem 1.5rem;
-      background: var(--blood);
-      color: var(--chalk);
-      border: 2px solid var(--blood);
-      font-family: var(--font-mono);
-      font-size: 0.75rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      cursor: pointer;
-      white-space: nowrap;
-      transition: background 0.2s;
-    }
-    .email-btn:hover { background: var(--rust); border-color: var(--rust); }
-
-    .email-note {
-      font-family: var(--font-mono);
-      font-size: 0.65rem;
-      color: rgba(244,242,238,0.25);
-      margin-top: 1rem;
-      letter-spacing: 0.06em;
-    }
-
-    .email-success {
-      display: none;
-      font-family: var(--font-mono);
-      font-size: 0.9rem;
-      color: var(--chalk);
-      padding: 1rem 2rem;
-      border: 1px solid rgba(255,255,255,0.2);
-      margin: 0 auto;
-      max-width: 480px;
-    }
-
-    @media (max-width: 500px) {
-      .email-form { flex-direction: column; }
-      .email-input { border-right: 2px solid rgba(255,255,255,0.2); border-bottom: none; }
-    }
-
-    /* ─── FOOTER ──────────────────────────────────────────────────────── */
-    footer {
-      background: var(--concrete);
-      color: var(--chalk);
-      padding: 4rem 0 2rem;
-      border-top: 2px solid var(--ink);
-    }
-    .footer-grid {
-      display: grid;
-      grid-template-columns: 2fr 1fr 1fr;
-      gap: calc(var(--gap) * 1.5);
-      margin-bottom: 3rem;
-    }
-    @media (max-width: 720px) { .footer-grid { grid-template-columns: 1fr; } }
-
-    .footer-brand .logo { margin-bottom: 1rem; }
-    .footer-brand p {
-      font-family: var(--font-serif);
-      font-style: italic;
-      font-size: 0.85rem;
-      color: rgba(244,242,238,0.5);
-      line-height: 1.65;
-      max-width: 260px;
-    }
-
-    .footer-col h5 {
-      font-family: var(--font-mono);
-      font-size: 0.65rem;
-      text-transform: uppercase;
-      letter-spacing: 0.14em;
-      color: var(--blood);
-      margin-bottom: 1.1rem;
-    }
-    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
-    .footer-col ul li a {
-      font-family: var(--font-mono);
-      font-size: 0.78rem;
-      color: rgba(244,242,238,0.55);
-      transition: color 0.2s;
-    }
-    .footer-col ul li a:hover { color: var(--chalk); }
-
-    .footer-bottom {
-      border-top: 1px solid rgba(255,255,255,0.08);
-      padding-top: 1.5rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 1rem;
-    }
-    .footer-bottom p {
-      font-family: var(--font-mono);
-      font-size: 0.65rem;
-      color: rgba(244,242,238,0.3);
-      letter-spacing: 0.06em;
-    }
-
-    /* ─── SCROLL TO TOP ───────────────────────────────────────────────── */
-    #scroll-top {
-      position: fixed;
-      bottom: 2rem;
-      right: 2rem;
-      width: 44px; height: 44px;
-      background: var(--ink);
-      color: var(--chalk);
-      border: none;
-      cursor: pointer;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1.1rem;
-      opacity: 0;
-      transform: translateY(10px);
-      transition: all 0.3s;
-      z-index: 99;
-    }
-    #scroll-top.visible { opacity: 1; transform: translateY(0); }
-    #scroll-top:hover { background: var(--blood); }
+    #st.v{opacity:1;transform:none}
+    #st:hover{background:var(--red-hi)}
   </style>
 </head>
 <body>
 
-<!-- ─── HEADER ────────────────────────────────────────────────────────── -->
-<header id="header">
-  <div class="wrap">
-    <div class="header-inner">
-      <a href="#" class="logo">
-        <div class="logo-rat">🐀</div>
-        Suburban Vermin
-      </a>
-      <nav>
-        <a href="#featured">Featured</a>
-        <a href="#collections">Collections</a>
-        <a href="#about">About</a>
-        <a href="https://suburban-vermin.printify.me/" target="_blank" rel="noopener noreferrer" class="cta">Shop Now</a>
-      </nav>
-      <button class="mob-menu-btn" id="mob-btn" aria-label="Toggle menu">
-        <span></span><span></span><span></span>
-      </button>
-    </div>
+<!-- ─── NAV ──────────────────────────────────── -->
+<nav id="bar">
+  <a href="#" class="bar-logo">
+    <img src="logo.svg" alt="Suburban Vermin"/>
+    <span>Suburban Vermin</span>
+  </a>
+  <div class="bar-nav">
+    <a href="#dd">Dull Dad</a>
+    <a href="#colls">Collections</a>
+    <a href="about.html">About</a>
+    <a href="https://suburban-vermin.printify.me/" target="_blank" rel="noopener noreferrer" class="bar-shop">Shop Now</a>
   </div>
-  <nav id="mob-nav">
-    <a href="#featured" onclick="closeMobNav()">Featured</a>
-    <a href="#collections" onclick="closeMobNav()">Collections</a>
-    <a href="#about" onclick="closeMobNav()">About</a>
-    <a href="https://suburban-vermin.printify.me/" target="_blank" rel="noopener noreferrer">Shop Now →</a>
-  </nav>
-</header>
+  <button class="hbg" id="hbg" aria-label="Menu"><span></span><span></span><span></span></button>
+</nav>
+<div id="mob">
+  <a href="#dd" onclick="cm()">Dull Dad</a>
+  <a href="#colls" onclick="cm()">Collections</a>
+  <a href="about.html">About</a>
+  <a href="https://suburban-vermin.printify.me/" target="_blank" rel="noopener noreferrer">Shop Now →</a>
+</div>
 
-<!-- ─── HERO ──────────────────────────────────────────────────────────── -->
+<!-- ─── HERO ──────────────────────────────────── -->
 <section id="hero">
-  <div class="hero-left">
-    <p class="hero-kicker" style="animation: fadeUp 0.8s ease both;">Dark Humour. British. Suburban.</p>
-    <h1 class="hero-h1" style="animation: fadeUp 0.8s 0.1s ease both;">
-      Prints for Men<br>Who <em>Expected</em><br>More
+  <div class="hero-l">
+    <p class="h-tag">Dark Humour · British · Suburban</p>
+    <h1 class="h1">
+      Prints<br>
+      For Men<br>
+      Who<br>
+      <span class="red">Expected</span><br>
+      <span class="outline">More</span>
     </h1>
-    <p class="hero-copy" style="animation: fadeUp 0.8s 0.2s ease both;">
-      At 35, 45, or 55 you've discovered the truth: life is a sequence of small victories disguised as disappointments. You've got a mortgage, a job that barely cares, and a sense of humour dark enough to draw blood.
-    </p>
-    <div class="btn-row" style="animation: fadeUp 0.8s 0.3s ease both;">
-      <a href="https://suburban-vermin.printify.me/" target="_blank" rel="noopener noreferrer" class="btn btn-solid">Shop the Store</a>
-      <a href="#featured" class="btn btn-ghost">See Designs</a>
+    <p class="h-copy">At 35, 45, 55 — you understand exactly how things work. The mortgage. The commute. The job that doesn't care. We make clothing for that specific understanding.</p>
+    <div class="btns">
+      <a href="#dd" class="btn btn-solid">Dull Dad Collection</a>
+      <a href="https://suburban-vermin.printify.me/" target="_blank" rel="noopener noreferrer" class="btn btn-ghost">Full Store →</a>
     </div>
   </div>
 
-  <div class="hero-right">
-    <div class="hero-statement" style="animation: fadeIn 1.2s 0.4s ease both;">
-      <span class="big">35–60</span>
-      <span class="small">The honest years. The dark ones.</span>
+  <div class="hero-r">
+    <div class="logo-ring-wrap">
+      <div class="spin-ring-2"></div>
+      <div class="spin-ring"></div>
+      <img src="logo.svg" alt="Suburban Vermin badge"/>
     </div>
-    <div class="hero-tags" style="animation: fadeUp 1s 0.6s ease both;">
-      <span class="tag">Dull Dad</span>
-      <span class="tag">England Fan</span>
-      <span class="tag">Suburban Grind</span>
-      <span class="tag">Mortgage Reality</span>
-      <span class="tag">Existential Observations</span>
+    <div class="hero-stats">
+      <div class="hstat"><p>35–60</p><p>Age range</p></div>
+      <div class="hstat"><p>0%</p><p>Optimism</p></div>
+      <div class="hstat"><p>100%</p><p>British</p></div>
     </div>
-    <div class="hero-scroll">Scroll</div>
   </div>
 </section>
 
-<!-- ─── TICKER ────────────────────────────────────────────────────────── -->
-<div class="ticker" aria-hidden="true">
-  <div class="ticker-track">
-    <span>Dark Humour Clothing</span><span class="sep">·</span>
-    <span>British. Suburban. Real.</span><span class="sep">·</span>
+<!-- ─── TICKER ─────────────────────────────────── -->
+<div class="tick" aria-hidden="true">
+  <div class="tick-t">
     <span>Dull Dad Collection</span><span class="sep">·</span>
     <span>England Fan</span><span class="sep">·</span>
-    <span>Mortgage Reality</span><span class="sep">·</span>
-    <span>Prints for the Grind</span><span class="sep">·</span>
+    <span>Suburban Grind</span><span class="sep">·</span>
     <span>23 Years Remaining</span><span class="sep">·</span>
+    <span>M25 Philosopher</span><span class="sep">·</span>
+    <span>The NHS Letter Arrived</span><span class="sep">·</span>
+    <span>Restructured at 47</span><span class="sep">·</span>
     <span>This Is As Good As It Gets</span><span class="sep">·</span>
-    <!-- duplicate for seamless loop -->
-    <span>Dark Humour Clothing</span><span class="sep">·</span>
-    <span>British. Suburban. Real.</span><span class="sep">·</span>
     <span>Dull Dad Collection</span><span class="sep">·</span>
     <span>England Fan</span><span class="sep">·</span>
-    <span>Mortgage Reality</span><span class="sep">·</span>
-    <span>Prints for the Grind</span><span class="sep">·</span>
+    <span>Suburban Grind</span><span class="sep">·</span>
     <span>23 Years Remaining</span><span class="sep">·</span>
+    <span>M25 Philosopher</span><span class="sep">·</span>
+    <span>The NHS Letter Arrived</span><span class="sep">·</span>
+    <span>Restructured at 47</span><span class="sep">·</span>
     <span>This Is As Good As It Gets</span><span class="sep">·</span>
   </div>
 </div>
 
-<!-- ─── FEATURED PRODUCTS ─────────────────────────────────────────────── -->
-<section id="featured">
+<!-- ─── DULL DAD SPOTLIGHT ───────────────────── -->
+<section id="dd">
   <div class="wrap">
-    <div class="section-head reveal">
+
+    <div class="dd-head r">
       <div>
-        <p class="section-label">The Best of the Grind</p>
-        <h2 class="section-h2">Featured Designs</h2>
-        <p class="section-sub">Our most honest work. For the men who get it.</p>
+        <p class="s-eyebrow">Featured Collection</p>
+        <h2 class="s-h2">The Dull<br>Dad Collection</h2>
       </div>
-      <a href="https://suburban-vermin.printify.me/" target="_blank" rel="noopener noreferrer" class="section-link">View All Designs →</a>
+      <p class="dd-aside">For the man whose victories are small and embarrassing. Found the remote. Found the glasses. Found himself crying at the John Lewis ad. Again.</p>
     </div>
 
-    <div class="products-grid reveal">
+    <!-- 8 shirt cards. The printed text IS the product design. -->
+    <div class="shirt-grid r d1">
 
-      <a href="https://suburban-vermin.printify.me/" target="_blank" rel="noopener noreferrer" class="p-card">
-        <div class="p-card-visual">
-          <span class="coll-badge">Dull Dad</span>
-          <span class="icon">📺</span>
+      <!-- 1 -->
+      <a href="https://suburban-vermin.printify.me/" target="_blank" rel="noopener noreferrer" class="shirt">
+        <span class="shirt-num">1</span>
+        <div class="shirt-body">
+          <p class="t-small">Official Record</p>
+          <div class="t-rule"></div>
+          <p class="t-big">Found It</p>
+          <p class="t-sub">Remote&nbsp;Control</p>
+          <p class="t-italic">That's the victory now.<br>That's the win.</p>
         </div>
-        <div class="p-card-info">
-          <p class="p-card-title">Found It — Remote Control</p>
-          <p class="p-card-desc">That's the victory now. That's the win.</p>
-          <div class="p-card-bottom">
-            <span class="p-card-price">£18.52</span>
-            <span class="p-card-arrow">→</span>
-          </div>
+        <div class="shirt-foot">
+          <span class="s-price">£18.52</span>
+          <span class="s-arr">→</span>
         </div>
       </a>
 
-      <a href="https://suburban-vermin.printify.me/" target="_blank" rel="noopener noreferrer" class="p-card">
-        <div class="p-card-visual">
-          <span class="coll-badge">England Fan</span>
-          <span class="icon">⚽</span>
+      <!-- 2 -->
+      <a href="https://suburban-vermin.printify.me/" target="_blank" rel="noopener noreferrer" class="shirt">
+        <span class="shirt-num">2</span>
+        <div class="shirt-body">
+          <p class="t-small">They Were On My Head</p>
+          <div class="t-rule"></div>
+          <p class="t-big">Found<br>Them</p>
+          <p class="t-sub">· Glasses ·</p>
+          <p class="t-italic">The whole time.</p>
         </div>
-        <div class="p-card-info">
-          <p class="p-card-title">My Optimism Is a Form of Self-Harm</p>
-          <p class="p-card-desc">WC26. Same ritual. Same result.</p>
-          <div class="p-card-bottom">
-            <span class="p-card-price">£26.23</span>
-            <span class="p-card-arrow">→</span>
-          </div>
-        </div>
-      </a>
-
-      <a href="https://suburban-vermin.printify.me/" target="_blank" rel="noopener noreferrer" class="p-card">
-        <div class="p-card-visual">
-          <span class="coll-badge">Mortgage Reality</span>
-          <span class="icon">🏠</span>
-        </div>
-        <div class="p-card-info">
-          <p class="p-card-title">23 Years Remaining</p>
-          <p class="p-card-desc">The house always wins.</p>
-          <div class="p-card-bottom">
-            <span class="p-card-price">£18.52</span>
-            <span class="p-card-arrow">→</span>
-          </div>
+        <div class="shirt-foot">
+          <span class="s-price">£18.52</span>
+          <span class="s-arr">→</span>
         </div>
       </a>
 
-      <a href="https://suburban-vermin.printify.me/" target="_blank" rel="noopener noreferrer" class="p-card">
-        <div class="p-card-visual">
-          <span class="coll-badge">Medical Paranoia</span>
-          <span class="icon">📬</span>
+      <!-- 3 -->
+      <a href="https://suburban-vermin.printify.me/" target="_blank" rel="noopener noreferrer" class="shirt">
+        <span class="shirt-num">3</span>
+        <div class="shirt-body">
+          <p class="t-small">Ongoing Investigation</p>
+          <div class="t-rule"></div>
+          <p class="t-big">Where<br>Are My<br>Keys?</p>
+          <p class="t-italic">Still looking.<br>Always looking.</p>
         </div>
-        <div class="p-card-info">
-          <p class="p-card-title">The NHS Letter Arrived</p>
-          <p class="p-card-desc">Routine screening. Existential dread.</p>
-          <div class="p-card-bottom">
-            <span class="p-card-price">£18.52</span>
-            <span class="p-card-arrow">→</span>
-          </div>
-        </div>
-      </a>
-
-      <a href="https://suburban-vermin.printify.me/" target="_blank" rel="noopener noreferrer" class="p-card">
-        <div class="p-card-visual">
-          <span class="coll-badge">Redundancy</span>
-          <span class="icon">💼</span>
-        </div>
-        <div class="p-card-info">
-          <p class="p-card-title">Restructured at 47</p>
-          <p class="p-card-desc">LinkedIn pivot incoming.</p>
-          <div class="p-card-bottom">
-            <span class="p-card-price">£18.52</span>
-            <span class="p-card-arrow">→</span>
-          </div>
+        <div class="shirt-foot">
+          <span class="s-price">£18.52</span>
+          <span class="s-arr">→</span>
         </div>
       </a>
 
-      <a href="https://suburban-vermin.printify.me/" target="_blank" rel="noopener noreferrer" class="p-card">
-        <div class="p-card-visual">
-          <span class="coll-badge">The Commute</span>
-          <span class="icon">🚗</span>
+      <!-- 4 -->
+      <a href="https://suburban-vermin.printify.me/" target="_blank" rel="noopener noreferrer" class="shirt">
+        <span class="shirt-num">4</span>
+        <div class="shirt-body">
+          <p class="t-small">I Am Absolutely Fine</p>
+          <div class="t-rule"></div>
+          <p class="t-big">Crying<br>At The<br>John Lewis<br>Ad</p>
+          <p class="t-sub">· Again ·</p>
         </div>
-        <div class="p-card-info">
-          <p class="p-card-title">M25 Philosopher</p>
-          <p class="p-card-desc">Stuck in motion. Again.</p>
-          <div class="p-card-bottom">
-            <span class="p-card-price">£18.52</span>
-            <span class="p-card-arrow">→</span>
-          </div>
+        <div class="shirt-foot">
+          <span class="s-price">£18.52</span>
+          <span class="s-arr">→</span>
         </div>
       </a>
 
-    </div><!-- .products-grid -->
+      <!-- 5 -->
+      <a href="https://suburban-vermin.printify.me/" target="_blank" rel="noopener noreferrer" class="shirt">
+        <span class="shirt-num">5</span>
+        <div class="shirt-body">
+          <p class="t-small">Approximate Age</p>
+          <div class="t-rule"></div>
+          <p class="t-big">My<br>Brain<br>Is 15</p>
+          <p class="t-italic">The body has<br>other ideas.</p>
+        </div>
+        <div class="shirt-foot">
+          <span class="s-price">£18.52</span>
+          <span class="s-arr">→</span>
+        </div>
+      </a>
+
+      <!-- 6 -->
+      <a href="https://suburban-vermin.printify.me/" target="_blank" rel="noopener noreferrer" class="shirt">
+        <span class="shirt-num">6</span>
+        <div class="shirt-body">
+          <p class="t-small">Joke Delivery Service</p>
+          <div class="t-rule"></div>
+          <p class="t-big">I Tried<br>The Joke</p>
+          <p class="t-italic">The children<br>did not find<br>it funny.<br>I did.</p>
+        </div>
+        <div class="shirt-foot">
+          <span class="s-price">£18.52</span>
+          <span class="s-arr">→</span>
+        </div>
+      </a>
+
+      <!-- 7 -->
+      <a href="https://suburban-vermin.printify.me/" target="_blank" rel="noopener noreferrer" class="shirt">
+        <span class="shirt-num">7</span>
+        <div class="shirt-body">
+          <p class="t-small">Re: The Dishwasher</p>
+          <div class="t-rule"></div>
+          <p class="t-big">Asked<br>Once.</p>
+          <p class="t-sub">Not Asked Again.</p>
+          <p class="t-italic">That's on them.</p>
+        </div>
+        <div class="shirt-foot">
+          <span class="s-price">£18.52</span>
+          <span class="s-arr">→</span>
+        </div>
+      </a>
+
+      <!-- 8 -->
+      <a href="https://suburban-vermin.printify.me/" target="_blank" rel="noopener noreferrer" class="shirt">
+        <span class="shirt-num">8</span>
+        <div class="shirt-body">
+          <p class="t-small">Achievement Unlocked</p>
+          <div class="t-rule"></div>
+          <p class="t-big">Completed<br>The Shop</p>
+          <p class="t-italic">All items.<br>Under budget.<br>No list.</p>
+        </div>
+        <div class="shirt-foot">
+          <span class="s-price">£18.52</span>
+          <span class="s-arr">→</span>
+        </div>
+      </a>
+
+    </div><!-- .shirt-grid -->
+
+    <div class="dd-foot r">
+      <a href="https://suburban-vermin.printify.me/" target="_blank" rel="noopener noreferrer" class="btn btn-solid">Shop Full Dull Dad Collection</a>
+      <p class="dd-foot-note">New designs added regularly. Free UK delivery over £35.</p>
+    </div>
+
   </div>
 </section>
 
-<!-- ─── BRAND STATEMENT ───────────────────────────────────────────────── -->
-<section id="statement">
+<!-- ─── MANIFESTO ──────────────────────────────── -->
+<section id="mani">
   <div class="wrap">
-    <div class="statement-grid reveal">
-      <div class="statement-left">
-        <p class="statement-tag">The Suburban Vermin Thesis</p>
-        <h2 class="statement-h2">
-          The gap between who you expected to be and who you <em>are</em> deserves to be named.
-        </h2>
-      </div>
-      <div class="statement-right">
-        <p class="statement-p">
-          <strong>Not celebrated. Not mourned.</strong> Just honestly acknowledged. Every design exists because it names something true — something you've thought at 3am.
-        </p>
-        <p class="statement-p">
-          Something you'd never admit to your wife, your kids, or your mates at the pub. But you know it. It sits with you on the commute. It follows you around the DIY shop. It waits for you in the bathroom at 5am.
-        </p>
-        <p class="statement-p">
-          Suburban Vermin started because someone needed to name the feeling of being 43 with a mortgage, a job that doesn't care, and a sense of humour dark enough to hurt.
-        </p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ─── COLLECTIONS ───────────────────────────────────────────────────── -->
-<section id="collections">
-  <div class="wrap">
-    <div class="section-head reveal">
+    <div class="mani-inner r">
       <div>
-        <p class="section-label">By Theme</p>
-        <h2 class="section-h2">Collections</h2>
-        <p class="section-sub">Different niches. Same unspoken truth.</p>
+        <p class="mani-label">The Suburban Vermin Thesis</p>
+        <h2 class="mani-head">Why This<br>Exists</h2>
       </div>
+      <p class="mani-quote">
+        "There's a gap between <b>WHO YOU EXPECTED TO BECOME</b> and who you are. It opened somewhere between 35 and now. You're not bitter — you're accurate. Suburban Vermin names that gap. Not to fix it, not to mourn it. Just to <b>NAME IT HONESTLY.</b> With decent printing on a quality blank."
+      </p>
     </div>
-
-    <div class="reveal">
-      <div class="coll-tabs" role="tablist">
-        <button class="coll-tab active" onclick="showTab('dull-dad')" role="tab">Dull Dad</button>
-        <button class="coll-tab" onclick="showTab('england')" role="tab">England Fan</button>
-        <button class="coll-tab" onclick="showTab('suburban')" role="tab">Suburban Grind</button>
-        <button class="coll-tab" onclick="showTab('existential')" role="tab">Existential</button>
-      </div>
-
-      <!-- Dull Dad -->
-      <div id="tab-dull-dad" class="coll-panel active">
-        <div class="coll-desc">
-          <h3>Dull Dad Collection</h3>
-          <p>For the man whose victories are small and embarrassing. Found the remote. Found your glasses. Found yourself laughing at absolutely nothing at 7pm on a Tuesday.</p>
-          <a href="https://suburban-vermin.printify.me/" target="_blank" rel="noopener noreferrer" class="btn btn-solid">Shop This Collection</a>
-        </div>
-        <div class="coll-items">
-          <div class="coll-item"><span class="coll-item-arrow">→</span>Found It — Remote Control</div>
-          <div class="coll-item"><span class="coll-item-arrow">→</span>Found Them — Glasses</div>
-          <div class="coll-item"><span class="coll-item-arrow">→</span>Where Are My Keys?</div>
-          <div class="coll-item"><span class="coll-item-arrow">→</span>My Brain Is 15 Years Old</div>
-          <div class="coll-item"><span class="coll-item-arrow">→</span>Crying at the John Lewis Christmas Ad Again</div>
-        </div>
-      </div>
-
-      <!-- England Fan -->
-      <div id="tab-england" class="coll-panel">
-        <div class="coll-desc">
-          <h3>England Fan Collection</h3>
-          <p>Dark observations on national hope, perpetual disappointment, and the crushing inevitability of tournament football. It was never coming home. You knew that.</p>
-          <a href="https://suburban-vermin.printify.me/" target="_blank" rel="noopener noreferrer" class="btn btn-solid">Shop This Collection</a>
-        </div>
-        <div class="coll-items">
-          <div class="coll-item"><span class="coll-item-arrow">→</span>My Optimism Is a Form of Self-Harm</div>
-          <div class="coll-item"><span class="coll-item-arrow">→</span>Coming Home (Probably Not)</div>
-          <div class="coll-item"><span class="coll-item-arrow">→</span>Book Early — It's Happening Again</div>
-          <div class="coll-item"><span class="coll-item-arrow">→</span>Is It Coming Home? It's Not Coming Home.</div>
-          <div class="coll-item"><span class="coll-item-arrow">→</span>WC26: The Wait Continues</div>
-        </div>
-      </div>
-
-      <!-- Suburban Grind -->
-      <div id="tab-suburban" class="coll-panel">
-        <div class="coll-desc">
-          <h3>Suburban Grind</h3>
-          <p>The mortgage, the commute, the realisation that this is it. Honest prints for men stuck in the machinery of lower-middle-class acceptance. You chose this. Sort of.</p>
-          <a href="https://suburban-vermin.printify.me/" target="_blank" rel="noopener noreferrer" class="btn btn-solid">Shop This Collection</a>
-        </div>
-        <div class="coll-items">
-          <div class="coll-item"><span class="coll-item-arrow">→</span>23 Years Remaining</div>
-          <div class="coll-item"><span class="coll-item-arrow">→</span>M25 Philosopher</div>
-          <div class="coll-item"><span class="coll-item-arrow">→</span>The House Always Wins</div>
-          <div class="coll-item"><span class="coll-item-arrow">→</span>Restructured at 47</div>
-          <div class="coll-item"><span class="coll-item-arrow">→</span>Quiet Quitting Since 2003</div>
-        </div>
-      </div>
-
-      <!-- Existential -->
-      <div id="tab-existential" class="coll-panel">
-        <div class="coll-desc">
-          <h3>Existential Observations</h3>
-          <p>Medical paranoia, ageing surprises, and the slow acceptance that you're becoming invisible. Prints that name the unnameable. For when WebMD is your primary GP.</p>
-          <a href="https://suburban-vermin.printify.me/" target="_blank" rel="noopener noreferrer" class="btn btn-solid">Shop This Collection</a>
-        </div>
-        <div class="coll-items">
-          <div class="coll-item"><span class="coll-item-arrow">→</span>The NHS Letter Arrived</div>
-          <div class="coll-item"><span class="coll-item-arrow">→</span>WebMD Is My Life Coach</div>
-          <div class="coll-item"><span class="coll-item-arrow">→</span>Aches I Can't Explain</div>
-          <div class="coll-item"><span class="coll-item-arrow">→</span>When Did I Become Invisible?</div>
-          <div class="coll-item"><span class="coll-item-arrow">→</span>This Is As Good As It Gets</div>
-        </div>
-      </div>
-    </div><!-- reveal -->
   </div>
 </section>
 
-<!-- ─── ABOUT ──────────────────────────────────────────────────────────── -->
-<section id="about">
+<!-- ─── OTHER COLLECTIONS ─────────────────────── -->
+<section id="colls">
   <div class="wrap">
-    <div class="about-grid">
-      <div class="about-left reveal">
-        <p class="section-label">Who We Are & Why</p>
-        <h2 class="about-h2">For the Man Who <em>Understands</em><br>Exactly How Things Work</h2>
-        <p class="about-p">You're not bitter. You're accurate. The optimism was never really there — it was just something you performed for a few years before the commute trained it out of you.</p>
-        <p class="about-p">Suburban Vermin makes clothing for that specific state of being. British, suburban, 35–60, and possessed of a dark humour that comes from understanding your situation fully.</p>
-        <p class="about-p">We don't celebrate failure. We don't mourn it either. We just name it. Honestly. With decent printing on a quality blank.</p>
-        <br>
-        <a href="https://suburban-vermin.printify.me/" target="_blank" rel="noopener noreferrer" class="btn btn-solid">Browse the Full Store</a>
+
+    <div class="colls-head r">
+      <div>
+        <p class="s-eyebrow">Not Just Dull Dad</p>
+        <h2 class="colls-h2">All Collections</h2>
+      </div>
+      <a href="collections.html" class="colls-link">Browse All →</a>
+    </div>
+
+    <div class="coll-grid r d1">
+
+      <a href="collections.html" class="coll-card">
+        <span class="coll-big-num">02</span>
+        <p class="coll-tag">Collection</p>
+        <h3 class="coll-name">England Fan</h3>
+        <p class="coll-desc">Dark observations on national hope, perpetual disappointment, and the crushing inevitability of tournament football. It was never coming home.</p>
+        <div class="coll-foot">
+          <span class="coll-count">5 designs</span>
+          <span class="coll-arr">→</span>
+        </div>
+      </a>
+
+      <a href="collections.html" class="coll-card">
+        <span class="coll-big-num">03</span>
+        <p class="coll-tag">Collection</p>
+        <h3 class="coll-name">Suburban Grind</h3>
+        <p class="coll-desc">The mortgage. The commute. The realisation that this is, genuinely, it. For men stuck in the machinery of lower-middle-class acceptance.</p>
+        <div class="coll-foot">
+          <span class="coll-count">5 designs</span>
+          <span class="coll-arr">→</span>
+        </div>
+      </a>
+
+      <a href="collections.html" class="coll-card">
+        <span class="coll-big-num">04</span>
+        <p class="coll-tag">Collection</p>
+        <h3 class="coll-name">Existential Observations</h3>
+        <p class="coll-desc">Medical paranoia, ageing surprises, and the slow acceptance that you're becoming invisible. For when WebMD is your primary GP.</p>
+        <div class="coll-foot">
+          <span class="coll-count">5 designs</span>
+          <span class="coll-arr">→</span>
+        </div>
+      </a>
+
+      <a href="collections.html" class="coll-card">
+        <span class="coll-big-num">05</span>
+        <p class="coll-tag">Collection</p>
+        <h3 class="coll-name">Redundancy</h3>
+        <p class="coll-desc">Restructured at 47. LinkedIn pivot incoming. Too experienced to leave, too junior to matter. The middle management trap, honestly named.</p>
+        <div class="coll-foot">
+          <span class="coll-count">4 designs</span>
+          <span class="coll-arr">→</span>
+        </div>
+      </a>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- ─── ABOUT STRIP ────────────────────────────── -->
+<section id="abt">
+  <div class="wrap">
+    <div class="abt-grid">
+
+      <div class="abt-logo-side r">
+        <img src="logo.svg" alt="Suburban Vermin"/>
       </div>
 
-      <div class="about-right reveal">
-        <div class="values">
-          <div class="value-item">
-            <span class="value-num">01</span>
-            <div class="value-text">
-              <h4>Honesty First</h4>
-              <p>No cheerleading. No toxic positivity. Designs that name what's actually true — about being this age, in this country, in this house you're still paying for.</p>
-            </div>
-          </div>
-          <div class="value-item">
-            <span class="value-num">02</span>
-            <div class="value-text">
-              <h4>Specifically British</h4>
-              <p>Not broadly ironic. Not blandly self-deprecating. The humour has a specific English accent — the kind that comes from the M25 and the 6:42 and the pension you forgot to start.</p>
-            </div>
-          </div>
-          <div class="value-item">
-            <span class="value-num">03</span>
-            <div class="value-text">
-              <h4>Built to Last</h4>
-              <p>Premium blanks. Clean printing. Clothes that last as long as your cynicism — which, frankly, is forever.</p>
-            </div>
-          </div>
-          <div class="value-item">
-            <span class="value-num">04</span>
-            <div class="value-text">
-              <h4>Recognition Over Mockery</h4>
-              <p>These aren't designs that laugh at you. They make you feel seen. That's the difference. That's the whole point.</p>
-            </div>
-          </div>
+      <div class="r d1">
+        <h2 class="abt-h2">For The Man Who<br><span>Understands</span><br>How Things Work</h2>
+        <p class="abt-p">British men, 35–60. Suburban by circumstance rather than conviction. In possession of a dark, specifically British sense of humour that comes from accuracy, not bitterness.</p>
+        <p class="abt-p">You know the M25. The 6:42. The NHS letter. The redundancy consultation. The second-to-last step on the ladder — and you've been standing on it for a while.</p>
+        <div class="pillars">
+          <div class="pill"><p class="pill-h">Honesty First</p><p class="pill-b">Designs that name what's actually true.</p></div>
+          <div class="pill"><p class="pill-h">Specifically British</p><p class="pill-b">The humour has a specific postcode.</p></div>
+          <div class="pill"><p class="pill-h">Quality Blanks</p><p class="pill-b">Lasts as long as your cynicism.</p></div>
+          <div class="pill"><p class="pill-h">Recognition</p><p class="pill-b">Not mockery. The goal is to feel seen.</p></div>
+        </div>
+        <div class="abt-btns">
+          <a href="about.html" class="btn btn-ghost">About Us</a>
+          <a href="https://suburban-vermin.printify.me/" target="_blank" rel="noopener noreferrer" class="btn btn-solid">Shop Now</a>
         </div>
       </div>
+
     </div>
   </div>
 </section>
 
-<!-- ─── EMAIL ─────────────────────────────────────────────────────────── -->
+<!-- ─── EMAIL ──────────────────────────────────── -->
 <section id="email">
-  <div class="email-inner">
-    <p class="section-label">New Designs Drop Regularly</p>
-    <h2 class="email-h2">Get New Drops.<br>Same Darkness.</h2>
-    <p class="email-sub">Updates when new collections land. Unsubscribe anytime. We won't even notice.</p>
-
-    <form class="email-form" id="email-form" onsubmit="handleEmailSubmit(event)" name="email-signup" netlify>
-      <input type="email" class="email-input" id="email-input" placeholder="your@email.com" required />
-      <button type="submit" class="email-btn">Subscribe</button>
-    </form>
-    <div class="email-success" id="email-success">
-      ✓ Confirmed. Expect the worst. (Updates, we mean.)
+  <div class="wrap">
+    <div class="email-inner r">
+      <h2 class="email-h2">New Drops.<br>Same Darkness.</h2>
+      <p class="email-sub">Updates when new collections land. Unsubscribe anytime. We won't even notice.</p>
+      <form class="email-form" id="eForm" onsubmit="handleEmail(event)" name="email-signup" netlify>
+        <input type="email" class="email-in" id="eIn" placeholder="your@email.com" required/>
+        <button type="submit" class="email-btn">Subscribe</button>
+      </form>
+      <div class="email-ok" id="eOk">✓ Done. Expect the worst. (New designs, we mean.)</div>
+      <p class="email-note">No spam. No inspiration. Just honest clothing updates.</p>
     </div>
-    <p class="email-note">No spam. No inspirational content. Just honest clothing updates.</p>
   </div>
 </section>
 
-<!-- ─── FOOTER ────────────────────────────────────────────────────────── -->
+<!-- ─── FOOTER ─────────────────────────────────── -->
 <footer>
   <div class="wrap">
-    <div class="footer-grid">
-      <div class="footer-brand">
-        <div class="logo">
-          <div class="logo-rat">🐀</div>
-          Suburban Vermin
+    <div class="foot-top">
+      <div>
+        <div class="foot-logo">
+          <img src="logo.svg" alt=""/>
+          <span>Suburban Vermin</span>
         </div>
-        <p>Dark humour prints for British men between 35 and 60. For those who expected more and got something else entirely.</p>
+        <p class="foot-tag">Dark humour prints for British men between 35 and 60. For those who expected more and got something else entirely.</p>
       </div>
-      <div class="footer-col">
+      <div class="foot-col">
         <h5>Navigate</h5>
         <ul>
-          <li><a href="#featured">Featured Designs</a></li>
-          <li><a href="#collections">Collections</a></li>
-          <li><a href="#about">About</a></li>
+          <li><a href="#dd">Dull Dad</a></li>
+          <li><a href="collections.html">All Collections</a></li>
+          <li><a href="about.html">About</a></li>
           <li><a href="https://suburban-vermin.printify.me/" target="_blank" rel="noopener noreferrer">Full Store →</a></li>
         </ul>
       </div>
-      <div class="footer-col">
+      <div class="foot-col">
         <h5>Follow</h5>
         <ul>
           <li><a href="#">Instagram</a></li>
@@ -1338,100 +969,55 @@
         </ul>
       </div>
     </div>
-    <div class="footer-bottom">
+    <div class="foot-bottom">
       <p>© 2026 Suburban Vermin. All designs protected.</p>
-      <p class="mono">Dark humour. British. Print-on-demand. Real.</p>
+      <p>Dark Humour · British · Print-On-Demand</p>
     </div>
   </div>
 </footer>
 
-<!-- ─── SCROLL TOP ────────────────────────────────────────────────────── -->
-<button id="scroll-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top">↑</button>
+<button id="st" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top">↑</button>
 
-<!-- ─── JS ───────────────────────────────────────────────────────────── -->
 <script>
-  /* Header scroll state */
-  const header = document.getElementById('header');
-  const scrollTopBtn = document.getElementById('scroll-top');
-
+  /* Nav */
+  const bar = document.getElementById('bar');
+  const st  = document.getElementById('st');
   window.addEventListener('scroll', () => {
-    if (window.scrollY > 80) {
-      header.classList.add('scrolled');
-      scrollTopBtn.classList.add('visible');
-    } else {
-      header.classList.remove('scrolled');
-      scrollTopBtn.classList.remove('visible');
-    }
+    bar.classList.toggle('lit', scrollY > 60);
+    st.classList.toggle('v',   scrollY > 400);
   });
 
   /* Mobile menu */
-  const mobBtn  = document.getElementById('mob-btn');
-  const mobNav  = document.getElementById('mob-nav');
-
-  mobBtn.addEventListener('click', () => {
-    const open = mobNav.classList.toggle('open');
-    mobBtn.classList.toggle('open', open);
-    mobBtn.setAttribute('aria-expanded', open);
+  const hbg = document.getElementById('hbg');
+  const mob = document.getElementById('mob');
+  hbg.addEventListener('click', () => {
+    const o = mob.classList.toggle('o');
+    hbg.classList.toggle('o', o);
   });
-
-  function closeMobNav() {
-    mobNav.classList.remove('open');
-    mobBtn.classList.remove('open');
-  }
+  function cm() { mob.classList.remove('o'); hbg.classList.remove('o'); }
 
   /* Scroll reveal */
-  const revealEls = document.querySelectorAll('.reveal');
-
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-        observer.unobserve(entry.target);
-      }
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('on'); obs.unobserve(e.target); }
     });
-  }, { threshold: 0.12 });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.r').forEach(el => obs.observe(el));
 
-  revealEls.forEach(el => observer.observe(el));
-
-  /* Collection tabs */
-  function showTab(id) {
-    document.querySelectorAll('.coll-tab').forEach((t, i) => {
-      const ids = ['dull-dad', 'england', 'suburban', 'existential'];
-      t.classList.toggle('active', ids[i] === id);
-    });
-    document.querySelectorAll('.coll-panel').forEach(p => {
-      p.classList.toggle('active', p.id === 'tab-' + id);
-    });
-  }
-
-  /* Email form */
-  function handleEmailSubmit(e) {
+  /* Email */
+  function handleEmail(e) {
     e.preventDefault();
-    const form    = document.getElementById('email-form');
-    const success = document.getElementById('email-success');
-    const input   = document.getElementById('email-input');
-
-    // Replace this with your actual form handler / Netlify Forms / Mailchimp endpoint
-    // For Netlify Forms: just remove this JS handler and let the form POST naturally
-    console.log('Email signup:', input.value);
-
-    form.style.display    = 'none';
-    success.style.display = 'block';
-    input.value           = '';
+    document.getElementById('eForm').style.display = 'none';
+    document.getElementById('eOk').style.display   = 'block';
   }
 
-  /* Smooth scroll for anchor links */
+  /* Anchor scroll offset */
   document.querySelectorAll('a[href^="#"]').forEach(a => {
     a.addEventListener('click', e => {
-      const target = document.querySelector(a.getAttribute('href'));
-      if (target) {
-        e.preventDefault();
-        const offset = 70;
-        window.scrollTo({ top: target.offsetTop - offset, behavior: 'smooth' });
-      }
+      const t = document.querySelector(a.getAttribute('href'));
+      if (t) { e.preventDefault(); window.scrollTo({ top: t.offsetTop - 58, behavior: 'smooth' }); }
     });
   });
 </script>
-
 </body>
 </html>
