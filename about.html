@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="About Suburban Vermin — who we are, why we exist, and who makes the prints." />
+  <title>About — Suburban Vermin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,600;0,700;1,400&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --ink: #141414; --concrete: #2b2b2b; --ash: #5a5a5a;
+      --chalk: #f4f2ee; --bone: #eae8e3; --paper: #faf9f7;
+      --blood: #7a2e2e; --rust: #9e4a2a;
+      --font-mono: 'IBM Plex Mono', monospace;
+      --font-serif: 'Libre Baskerville', Georgia, serif;
+      --gap: clamp(1rem, 3vw, 2.5rem);
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font-serif); background: var(--chalk); color: var(--ink); overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+    a { color: inherit; text-decoration: none; }
+    .wrap { max-width: 1180px; margin: 0 auto; padding: 0 var(--gap); }
+
+    @keyframes fadeUp { from { opacity:0; transform:translateY(18px); } to { opacity:1; transform:translateY(0); } }
+    .reveal { opacity: 0; transform: translateY(18px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* HEADER */
+    #header { position:fixed; top:0; left:0; right:0; z-index:100; background:var(--chalk); border-bottom:2px solid var(--ink); transition: box-shadow 0.3s; }
+    #header.scrolled { box-shadow: 0 4px 24px rgba(0,0,0,0.1); }
+    .header-inner { display:flex; align-items:center; justify-content:space-between; height:64px; }
+    .logo { font-family:var(--font-mono); font-size:1.1rem; font-weight:700; letter-spacing:-0.03em; text-transform:uppercase; display:flex; align-items:center; gap:0.5rem; }
+    .logo-rat { width:32px; height:32px; background:var(--ink); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:1rem; }
+    nav { display:flex; gap:2rem; align-items:center; }
+    nav a { font-family:var(--font-mono); font-size:0.8rem; text-transform:uppercase; letter-spacing:0.08em; color:var(--ash); transition:color 0.2s; }
+    nav a:hover, nav a.active { color:var(--ink); }
+    nav a.cta { background:var(--ink); color:var(--chalk); padding:0.5rem 1.1rem; font-weight:600; transition:background 0.2s; }
+    nav a.cta:hover { background:var(--blood); }
+    .mob-menu-btn { display:none; flex-direction:column; gap:5px; background:none; border:none; cursor:pointer; padding:4px; }
+    .mob-menu-btn span { display:block; width:24px; height:2px; background:var(--ink); transition:all 0.3s; }
+    .mob-menu-btn.open span:nth-child(1) { transform:rotate(45deg) translate(5px,5px); }
+    .mob-menu-btn.open span:nth-child(2) { opacity:0; }
+    .mob-menu-btn.open span:nth-child(3) { transform:rotate(-45deg) translate(5px,-5px); }
+    #mob-nav { display:none; flex-direction:column; background:var(--chalk); border-top:1px solid var(--bone); padding:1.5rem var(--gap); gap:1.2rem; }
+    #mob-nav.open { display:flex; }
+    #mob-nav a { font-family:var(--font-mono); font-size:0.9rem; text-transform:uppercase; letter-spacing:0.06em; }
+    @media (max-width:720px) { nav { display:none; } .mob-menu-btn { display:flex; } }
+
+    /* PAGE HEAD */
+    .page-head {
+      padding-top: 64px;
+      background: var(--concrete);
+      border-bottom: 2px solid var(--ink);
+    }
+    .page-head-inner {
+      padding: clamp(3rem, 7vw, 6rem) 0 clamp(3rem, 5vw, 5rem);
+      max-width: 700px;
+    }
+    .page-kicker {
+      font-family:var(--font-mono); font-size:0.7rem; text-transform:uppercase;
+      letter-spacing:0.14em; color:var(--blood); margin-bottom:1rem;
+      display:flex; align-items:center; gap:0.5rem;
+    }
+    .page-kicker::before { content:''; display:block; width:1.5rem; height:2px; background:var(--blood); }
+    .page-h1 {
+      font-family:var(--font-mono); font-size:clamp(2.4rem, 5vw, 3.5rem);
+      font-weight:700; letter-spacing:-0.04em; line-height:1.05;
+      color:var(--chalk); margin-bottom:1.5rem;
+    }
+    .page-h1 em { font-style:italic; font-family:var(--font-serif); font-weight:400; color:rgba(244,242,238,0.5); }
+    .page-intro {
+      font-family:var(--font-serif); font-size:1.05rem; line-height:1.85;
+      color:rgba(244,242,238,0.65); max-width:560px;
+    }
+
+    /* BODY SECTIONS */
+    .about-section { padding: clamp(3.5rem, 7vw, 6rem) 0; }
+    .about-section + .about-section { border-top: 1px solid var(--bone); }
+    .bg-bone { background: var(--bone); }
+    .bg-ink  { background: var(--ink); color: var(--chalk); }
+    .bg-paper { background: var(--paper); }
+
+    /* two col */
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: calc(var(--gap) * 2); align-items: start; }
+    @media (max-width: 720px) { .two-col { grid-template-columns: 1fr; } }
+
+    /* label */
+    .label {
+      font-family:var(--font-mono); font-size:0.68rem; text-transform:uppercase;
+      letter-spacing:0.14em; color:var(--blood); margin-bottom:1rem;
+    }
+    .label-light { color: rgba(244,242,238,0.4); }
+
+    /* headings */
+    .h2 {
+      font-family:var(--font-mono); font-size:clamp(1.7rem, 3.5vw, 2.4rem);
+      font-weight:700; letter-spacing:-0.03em; line-height:1.08; margin-bottom:1.2rem;
+    }
+    .h2 em { font-style:italic; font-family:var(--font-serif); font-weight:400; color:var(--blood); }
+    .h2-light { color:var(--chalk); }
+    .h2-light em { color:rgba(244,242,238,0.5); }
+
+    /* body copy */
+    .body-p { font-family:var(--font-serif); font-size:1rem; line-height:1.85; color:var(--ash); margin-bottom:1.1rem; }
+    .body-p-light { color:rgba(244,242,238,0.65); }
+
+    /* big quote */
+    .big-quote {
+      border-left: 4px solid var(--blood);
+      padding: 1.5rem 2rem;
+      margin: 2.5rem 0;
+      background: var(--bone);
+    }
+    .big-quote p {
+      font-family:var(--font-serif); font-style:italic;
+      font-size:clamp(1.1rem, 2.5vw, 1.4rem); line-height:1.65;
+      color:var(--ink);
+    }
+
+    /* numbered values */
+    .values { display:flex; flex-direction:column; }
+    .value-row {
+      display:flex; gap:1.5rem; padding:1.5rem 0;
+      border-bottom:1px solid var(--bone); align-items:flex-start;
+    }
+    .value-row:first-child { border-top:1px solid var(--bone); }
+    .v-num { font-family:var(--font-mono); font-size:0.65rem; color:var(--blood); font-weight:700; flex-shrink:0; padding-top:3px; }
+    .v-body h4 { font-family:var(--font-mono); font-size:0.9rem; font-weight:700; margin-bottom:0.4rem; }
+    .v-body p { font-family:var(--font-serif); font-size:0.9rem; line-height:1.65; color:var(--ash); }
+
+    /* dark values */
+    .values-dark .value-row { border-bottom-color:rgba(255,255,255,0.08); }
+    .values-dark .value-row:first-child { border-top-color:rgba(255,255,255,0.08); }
+    .values-dark .v-body h4 { color:var(--chalk); }
+    .values-dark .v-body p { color:rgba(244,242,238,0.5); }
+
+    /* FAQ */
+    .faqs { display:flex; flex-direction:column; gap:0; }
+    .faq-item { border-bottom:1px solid var(--bone); }
+    .faq-q {
+      display:flex; align-items:center; justify-content:space-between;
+      padding:1.2rem 0; cursor:pointer; gap:1rem;
+    }
+    .faq-q h4 { font-family:var(--font-mono); font-size:0.9rem; font-weight:600; line-height:1.3; }
+    .faq-icon {
+      width:28px; height:28px; background:var(--ink); color:var(--chalk);
+      display:flex; align-items:center; justify-content:center;
+      font-size:1rem; flex-shrink:0; transition:transform 0.3s;
+    }
+    .faq-item.open .faq-icon { transform:rotate(45deg); background:var(--blood); }
+    .faq-a { display:none; padding-bottom:1.2rem; }
+    .faq-item.open .faq-a { display:block; }
+    .faq-a p { font-family:var(--font-serif); font-size:0.9rem; line-height:1.75; color:var(--ash); }
+    .faq-a a { color:var(--blood); border-bottom:1px solid var(--blood); }
+
+    /* CTA bar */
+    .cta-bar {
+      background:var(--blood); padding:3rem 0; text-align:center;
+    }
+    .cta-bar h2 {
+      font-family:var(--font-mono); font-size:clamp(1.6rem, 3vw, 2.2rem);
+      font-weight:700; color:var(--chalk); letter-spacing:-0.03em; margin-bottom:0.75rem;
+    }
+    .cta-bar p { font-family:var(--font-serif); font-style:italic; color:rgba(244,242,238,0.7); margin-bottom:2rem; }
+
+    /* BTN */
+    .btn { font-family:var(--font-mono); font-size:0.78rem; font-weight:700; text-transform:uppercase; letter-spacing:0.1em; padding:0.85rem 1.8rem; border:2px solid; cursor:pointer; transition:all 0.25s; display:inline-block; }
+    .btn-solid { background:var(--ink); color:var(--chalk); border-color:var(--ink); }
+    .btn-solid:hover { background:var(--blood); border-color:var(--blood); }
+    .btn-chalk { background:var(--chalk); color:var(--ink); border-color:var(--chalk); }
+    .btn-chalk:hover { background:transparent; color:var(--chalk); border-color:var(--chalk); }
+
+    /* FOOTER */
+    footer { background:var(--concrete); color:var(--chalk); padding:3rem 0 2rem; border-top:2px solid var(--ink); }
+    .footer-bottom { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1rem; }
+    .footer-bottom p { font-family:var(--font-mono); font-size:0.65rem; color:rgba(244,242,238,0.3); letter-spacing:0.06em; }
+    .footer-links { display:flex; gap:2rem; }
+    .footer-links a { font-family:var(--font-mono); font-size:0.7rem; text-transform:uppercase; letter-spacing:0.1em; color:rgba(244,242,238,0.4); transition:color 0.2s; }
+    .footer-links a:hover { color:var(--chalk); }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header id="header">
+  <div class="wrap">
+    <div class="header-inner">
+      <a href="index.html" class="logo">
+        <div class="logo-rat">🐀</div>
+        Suburban Vermin
+      </a>
+      <nav>
+        <a href="index.html">Home</a>
+        <a href="collections.html">Collections</a>
+        <a href="about.html" class="active">About</a>
+        <a href="https://suburban-vermin.printify.me/" target="_blank" rel="noopener noreferrer" class="cta">Shop Now</a>
+      </nav>
+      <button class="mob-menu-btn" id="mob-btn" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+  <nav id="mob-nav">
+    <a href="index.html">Home</a>
+    <a href="collections.html">Collections</a>
+    <a href="about.html">About</a>
+    <a href="https://suburban-vermin.printify.me/" target="_blank" rel="noopener noreferrer">Shop Now →</a>
+  </nav>
+</header>
+
+<!-- PAGE HEAD -->
+<div class="page-head">
+  <div class="wrap">
+    <div class="page-head-inner" style="animation: fadeUp 0.8s ease both;">
+      <p class="page-kicker">Who We Are</p>
+      <h1 class="page-h1">About Suburban<br><em>Vermin</em></h1>
+      <p class="page-intro">
+        Dark humour clothing for British men between 35 and 60. For those who expected more, got something else entirely, and have found the whole thing faintly amusing.
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- THE THESIS -->
+<div class="about-section bg-paper">
+  <div class="wrap">
+    <div class="two-col reveal">
+      <div>
+        <p class="label">The Suburban Vermin Thesis</p>
+        <h2 class="h2">The gap between who you expected to be and who you <em>are</em></h2>
+      </div>
+      <div>
+        <p class="body-p">
+          There's a specific British experience that nobody names. You're in your 40s. The mortgage has 20-odd years left. The job is fine. The kids are exhausting. The commute is the commute.
+        </p>
+        <p class="body-p">
+          You're not in crisis. You're not miserable. But somewhere between your early 20s — when you were going to do something — and now, the gap opened up. The gap between the life you projected and the life you're living.
+        </p>
+        <p class="body-p">
+          Suburban Vermin started because someone needed to name that feeling. Not to wallow in it. Not to fix it. Just to say: this is real, this is specific, and this is darkly funny if you're willing to look at it directly.
+        </p>
+      </div>
+    </div>
+
+    <div class="big-quote reveal">
+      <p>"Every design exists because it names something true — something you've thought at 3am, something you'd never admit to your wife, your kids, or your mates at the pub."</p>
+    </div>
+  </div>
+</div>
+
+<!-- WHO IT'S FOR -->
+<div class="about-section bg-bone">
+  <div class="wrap">
+    <div class="two-col">
+      <div class="reveal">
+        <p class="label">The Audience</p>
+        <h2 class="h2">Who This Is <em>For</em></h2>
+        <p class="body-p">
+          British men, 35–60. Suburban by circumstance rather than conviction. Working, mostly. Married or divorced or somewhere between. Kids, or not. A dog, probably.
+        </p>
+        <p class="body-p">
+          You possess a dark, specifically British sense of humour that comes from understanding your situation fully. Not from bitterness — from accuracy.
+        </p>
+        <p class="body-p">
+          You know the M25. You know the 6:42. You know the feeling of the NHS letter. You know what a redundancy consultation actually means. You know the second-to-last step on the ladder, and you've been standing on it for a while.
+        </p>
+        <p class="body-p">
+          This clothing is for you. Not your younger colleagues. Not your LinkedIn connections. You.
+        </p>
+      </div>
+      <div class="reveal">
+        <div class="values">
+          <div class="value-row">
+            <span class="v-num">Age</span>
+            <div class="v-body">
+              <h4>35–60</h4>
+              <p>Old enough to know better. Young enough to still feel annoyed about it.</p>
+            </div>
+          </div>
+          <div class="value-row">
+            <span class="v-num">Where</span>
+            <div class="v-body">
+              <h4>British & Suburban</h4>
+              <p>The south-east semi. The town you commute out of. The place you ended up.</p>
+            </div>
+          </div>
+          <div class="value-row">
+            <span class="v-num">How</span>
+            <div class="v-body">
+              <h4>Dark Humour</h4>
+              <p>Not bitterness performed as wit. Actual dark comedy — the kind that comes from understanding.</p>
+            </div>
+          </div>
+          <div class="value-row">
+            <span class="v-num">Why</span>
+            <div class="v-body">
+              <h4>Recognition</h4>
+              <p>The feeling of being seen. Of someone naming the unnameable. That's the whole point.</p>
+            </div>
+          </div>
+          <div class="value-row">
+            <span class="v-num">Not</span>
+            <div class="v-body">
+              <h4>Mockery</h4>
+              <p>These designs don't laugh at you. They laugh with you — which is a different thing entirely.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- WHAT WE BELIEVE (dark) -->
+<div class="about-section bg-ink">
+  <div class="wrap">
+    <div class="two-col">
+      <div class="reveal">
+        <p class="label label-light">Our Philosophy</p>
+        <h2 class="h2 h2-light">Four Things We <em>Believe</em></h2>
+        <p class="body-p body-p-light">
+          There are enough brands making cheerful, aspirational clothing. There are enough brands making ironic clothing that isn't really ironic. We do something different.
+        </p>
+        <p class="body-p body-p-light">
+          We make clothing that is honest. Specifically, characteristically, unapologetically British-suburban honest.
+        </p>
+        <br>
+        <a href="https://suburban-vermin.printify.me/" target="_blank" rel="noopener noreferrer" class="btn btn-chalk">Shop the Store</a>
+      </div>
+      <div class="reveal">
+        <div class="values values-dark">
+          <div class="value-row">
+            <span class="v-num">01</span>
+            <div class="v-body">
+              <h4>Honesty First</h4>
+              <p>No cheerleading. No toxic positivity. Designs that name what's actually true — about being this age, in this country, in this house you're still paying for.</p>
+            </div>
+          </div>
+          <div class="value-row">
+            <span class="v-num">02</span>
+            <div class="v-body">
+              <h4>Specifically British</h4>
+              <p>The M25. The NHS letter. The 6:42. The pension you forgot to start. The dark humour has a specific postcode, and it matters.</p>
+            </div>
+          </div>
+          <div class="value-row">
+            <span class="v-num">03</span>
+            <div class="v-body">
+              <h4>Quality That Lasts</h4>
+              <p>Premium blanks. Clean, durable printing. Clothes that last as long as your cynicism — which, frankly, is forever.</p>
+            </div>
+          </div>
+          <div class="value-row">
+            <span class="v-num">04</span>
+            <div class="v-body">
+              <h4>Recognition Over Mockery</h4>
+              <p>The goal is always to make someone feel seen. Not superior. Not laughed at. Seen. That's the difference between good dark humour and cruelty.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FAQ -->
+<div class="about-section bg-paper">
+  <div class="wrap">
+    <div class="reveal" style="max-width: 720px; margin: 0 auto;">
+      <p class="label" style="text-align:center;">Common Questions</p>
+      <h2 class="h2" style="text-align:center; margin-bottom:3rem;">Things People <em>Ask</em></h2>
+
+      <div class="faqs">
+
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            <h4>Where are the products made?</h4>
+            <span class="faq-icon">+</span>
+          </div>
+          <div class="faq-a">
+            <p>All products are printed on demand via Printify's network of print partners. That means they're produced when you order them — no warehouse, no waste. Print facilities are based in the UK and EU to keep delivery times reasonable.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            <h4>What's the quality like?</h4>
+            <span class="faq-icon">+</span>
+          </div>
+          <div class="faq-a">
+            <p>We use premium heavyweight blanks — not the thin stuff. Standard t-shirts are printed on 180–220gsm cotton. Hoodies and sweatshirts are similarly premium. Designs are DTG (direct-to-garment) printed, which means they're wash-durable and don't crack or fade quickly. Full washing instructions are on each garment.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            <h4>How long does delivery take?</h4>
+            <span class="faq-icon">+</span>
+          </div>
+          <div class="faq-a">
+            <p>UK orders typically arrive in 5–8 business days. Production takes 2–3 days, then standard shipping adds another 2–5 days. We'll send you tracking once your order ships. International orders vary — usually 8–15 business days for Europe, and 10–20 for further afield.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            <h4>Can I return or exchange?</h4>
+            <span class="faq-icon">+</span>
+          </div>
+          <div class="faq-a">
+            <p>Because items are made to order, we can't accept returns for change of mind. However, if your order arrives damaged, misprinted, or incorrect, we'll replace it immediately — just send us a photo at <a href="mailto:support@suburban-vermin.com">support@suburban-vermin.com</a> within 30 days.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            <h4>How do I know what size to order?</h4>
+            <span class="faq-icon">+</span>
+          </div>
+          <div class="faq-a">
+            <p>Each product page on the store has a full size guide with chest and length measurements. Our t-shirts run true to size. If you're between sizes and prefer a looser fit — which suits our brand aesthetic — size up. Most of our customers are in the 'relaxed fit' camp, for obvious reasons.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            <h4>Can I suggest a design?</h4>
+            <span class="faq-icon">+</span>
+          </div>
+          <div class="faq-a">
+            <p>Yes. We actively want to hear from people who get the brand. If you've had a thought at 3am that you think deserves to be on a t-shirt, tell us. Send suggestions to <a href="mailto:designs@suburban-vermin.com">designs@suburban-vermin.com</a> — no promises, but we read everything.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            <h4>Do you do wholesale or custom orders?</h4>
+            <span class="faq-icon">+</span>
+          </div>
+          <div class="faq-a">
+            <p>For bulk orders (10+ units), office gifts, or custom print runs for events — get in touch. We can usually accommodate custom requests with a 10–14 day turnaround. Email <a href="mailto:trade@suburban-vermin.com">trade@suburban-vermin.com</a> with what you need.</p>
+          </div>
+        </div>
+
+      </div><!-- .faqs -->
+    </div>
+  </div>
+</div>
+
+<!-- CTA BAR -->
+<div class="cta-bar">
+  <div class="wrap">
+    <h2>Right Then. Enough Reading.</h2>
+    <p>The designs won't look at themselves. Go and have a look.</p>
+    <a href="https://suburban-vermin.printify.me/" target="_blank" rel="noopener noreferrer" class="btn btn-chalk">Shop the Full Store</a>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <div class="footer-bottom">
+      <p>© 2026 Suburban Vermin. All designs protected.</p>
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="collections.html">Collections</a>
+        <a href="https://suburban-vermin.printify.me/" target="_blank" rel="noopener noreferrer">Store</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  /* Header */
+  const header = document.getElementById('header');
+  window.addEventListener('scroll', () => header.classList.toggle('scrolled', window.scrollY > 80));
+
+  /* Mobile nav */
+  const mobBtn = document.getElementById('mob-btn');
+  const mobNav = document.getElementById('mob-nav');
+  mobBtn.addEventListener('click', () => {
+    const open = mobNav.classList.toggle('open');
+    mobBtn.classList.toggle('open', open);
+  });
+
+  /* Reveal */
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+  /* FAQ accordion */
+  function toggleFaq(qEl) {
+    const item = qEl.parentElement;
+    const wasOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+    if (!wasOpen) item.classList.add('open');
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Page Not Found — Suburban Vermin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,600;0,700;1,400&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --ink: #141414; --concrete: #2b2b2b; --ash: #5a5a5a;
+      --chalk: #f4f2ee; --bone: #eae8e3;
+      --blood: #7a2e2e;
+      --font-mono: 'IBM Plex Mono', monospace;
+      --font-serif: 'Libre Baskerville', Georgia, serif;
+    }
+    body {
+      font-family: var(--font-serif);
+      background: var(--concrete);
+      color: var(--chalk);
+      min-height: 100svh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      text-align: center;
+      -webkit-font-smoothing: antialiased;
+    }
+    @keyframes fadeUp {
+      from { opacity:0; transform:translateY(16px); }
+      to   { opacity:1; transform:translateY(0); }
+    }
+    .rat { font-size: 4rem; animation: fadeUp 0.6s ease both; margin-bottom: 1.5rem; }
+    .code {
+      font-family: var(--font-mono); font-size: clamp(4rem, 15vw, 8rem);
+      font-weight: 700; letter-spacing: -0.06em; color: var(--blood);
+      line-height: 1; animation: fadeUp 0.7s 0.05s ease both;
+    }
+    h1 {
+      font-family: var(--font-mono); font-size: clamp(1.2rem, 3vw, 1.8rem);
+      font-weight: 700; letter-spacing: -0.03em;
+      color: var(--chalk); margin: 1rem 0 0.75rem;
+      animation: fadeUp 0.7s 0.1s ease both;
+    }
+    p {
+      font-family: var(--font-serif); font-style: italic;
+      font-size: 1rem; line-height: 1.65;
+      color: rgba(244,242,238,0.55);
+      max-width: 400px; margin-bottom: 2.5rem;
+      animation: fadeUp 0.7s 0.15s ease both;
+    }
+    .links {
+      display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center;
+      animation: fadeUp 0.7s 0.2s ease both;
+    }
+    .btn {
+      font-family: var(--font-mono); font-size: 0.75rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.1em;
+      padding: 0.8rem 1.6rem; border: 2px solid;
+      text-decoration: none; transition: all 0.25s;
+    }
+    .btn-solid { background: var(--chalk); color: var(--ink); border-color: var(--chalk); }
+    .btn-solid:hover { background: var(--blood); border-color: var(--blood); color: var(--chalk); }
+    .btn-ghost { background: transparent; color: var(--chalk); border-color: rgba(244,242,238,0.3); }
+    .btn-ghost:hover { border-color: var(--chalk); }
+    .small {
+      margin-top: 3rem;
+      font-family: var(--font-mono); font-size: 0.62rem;
+      text-transform: uppercase; letter-spacing: 0.12em;
+      color: rgba(244,242,238,0.2);
+      animation: fadeUp 0.7s 0.3s ease both;
+    }
+  </style>
+</head>
+<body>
+  <div class="rat">🐀</div>
+  <div class="code">404</div>
+  <h1>Page Not Found</h1>
+  <p>Like your keys. Like your 30s. Like the sense of possibility you had in 1998. Gone. Just gone.</p>
+  <div class="links">
+    <a href="index.html" class="btn btn-solid">Back to Home</a>
+    <a href="collections.html" class="btn btn-ghost">Browse Collections</a>
+  </div>
+  <p class="small">Suburban Vermin — Dark Humour Prints</p>
+</body>
+</html>

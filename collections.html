@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Browse all Suburban Vermin collections — Dull Dad, England Fan, Suburban Grind, Existential Observations and more." />
+  <title>Collections — Suburban Vermin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,600;0,700;1,400&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ink:      #141414;
+      --concrete: #2b2b2b;
+      --ash:      #5a5a5a;
+      --chalk:    #f4f2ee;
+      --bone:     #eae8e3;
+      --paper:    #faf9f7;
+      --blood:    #7a2e2e;
+      --rust:     #9e4a2a;
+      --font-mono: 'IBM Plex Mono', monospace;
+      --font-serif: 'Libre Baskerville', Georgia, serif;
+      --gap: clamp(1rem, 3vw, 2.5rem);
+    }
+
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font-serif); background: var(--chalk); color: var(--ink); overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+    img { display: block; max-width: 100%; }
+    a { color: inherit; text-decoration: none; }
+    .mono { font-family: var(--font-mono); }
+    .wrap { max-width: 1180px; margin: 0 auto; padding: 0 var(--gap); }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .reveal { opacity: 0; transform: translateY(18px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* ── HEADER ── */
+    #header {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: var(--chalk); border-bottom: 2px solid var(--ink);
+      transition: box-shadow 0.3s;
+    }
+    #header.scrolled { box-shadow: 0 4px 24px rgba(0,0,0,0.1); }
+    .header-inner {
+      display: flex; align-items: center; justify-content: space-between; height: 64px;
+    }
+    .logo {
+      font-family: var(--font-mono); font-size: 1.1rem; font-weight: 700;
+      letter-spacing: -0.03em; text-transform: uppercase;
+      display: flex; align-items: center; gap: 0.5rem;
+    }
+    .logo-rat {
+      width: 32px; height: 32px; background: var(--ink); border-radius: 50%;
+      display: flex; align-items: center; justify-content: center; font-size: 1rem;
+    }
+    nav { display: flex; gap: 2rem; align-items: center; }
+    nav a {
+      font-family: var(--font-mono); font-size: 0.8rem; text-transform: uppercase;
+      letter-spacing: 0.08em; color: var(--ash); transition: color 0.2s;
+    }
+    nav a:hover, nav a.active { color: var(--ink); }
+    nav a.cta {
+      background: var(--ink); color: var(--chalk); padding: 0.5rem 1.1rem;
+      font-weight: 600; transition: background 0.2s;
+    }
+    nav a.cta:hover { background: var(--blood); }
+    .mob-menu-btn {
+      display: none; flex-direction: column; gap: 5px;
+      background: none; border: none; cursor: pointer; padding: 4px;
+    }
+    .mob-menu-btn span { display: block; width: 24px; height: 2px; background: var(--ink); transition: all 0.3s; }
+    .mob-menu-btn.open span:nth-child(1) { transform: rotate(45deg) translate(5px,5px); }
+    .mob-menu-btn.open span:nth-child(2) { opacity: 0; }
+    .mob-menu-btn.open span:nth-child(3) { transform: rotate(-45deg) translate(5px,-5px); }
+    #mob-nav {
+      display: none; flex-direction: column; background: var(--chalk);
+      border-top: 1px solid var(--bone); padding: 1.5rem var(--gap); gap: 1.2rem;
+    }
+    #mob-nav.open { display: flex; }
+    #mob-nav a { font-family: var(--font-mono); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.06em; }
+    @media (max-width: 720px) { nav { display: none; } .mob-menu-btn { display: flex; } }
+
+    /* ── PAGE HEADER ── */
+    .page-head {
+      padding-top: 64px;
+      background: var(--ink);
+      color: var(--chalk);
+      padding-bottom: 0;
+      border-bottom: 2px solid var(--blood);
+    }
+    .page-head-inner {
+      padding: clamp(3rem, 6vw, 5rem) 0 0;
+    }
+    .page-kicker {
+      font-family: var(--font-mono); font-size: 0.7rem; text-transform: uppercase;
+      letter-spacing: 0.14em; color: var(--blood); margin-bottom: 1rem;
+      display: flex; align-items: center; gap: 0.5rem;
+    }
+    .page-kicker::before { content: ''; display: block; width: 1.5rem; height: 2px; background: var(--blood); }
+    .page-h1 {
+      font-family: var(--font-mono); font-size: clamp(2.4rem, 5vw, 3.5rem);
+      font-weight: 700; letter-spacing: -0.04em; line-height: 1.05;
+      color: var(--chalk); margin-bottom: 1rem;
+    }
+    .page-sub {
+      font-family: var(--font-serif); font-style: italic; font-size: 1rem;
+      color: rgba(244,242,238,0.55); max-width: 520px; line-height: 1.65;
+      padding-bottom: 3rem;
+    }
+
+    /* filter bar (sits at bottom of page-head) */
+    .filter-bar {
+      display: flex; gap: 0; border-top: 2px solid rgba(255,255,255,0.1);
+      overflow-x: auto; scrollbar-width: none;
+    }
+    .filter-bar::-webkit-scrollbar { display: none; }
+    .filter-btn {
+      font-family: var(--font-mono); font-size: 0.72rem; text-transform: uppercase;
+      letter-spacing: 0.08em; padding: 0.9rem 1.5rem; border: none;
+      background: transparent; cursor: pointer; white-space: nowrap;
+      color: rgba(244,242,238,0.45); border-bottom: 3px solid transparent;
+      margin-bottom: -2px; transition: all 0.2s;
+    }
+    .filter-btn:hover { color: var(--chalk); }
+    .filter-btn.active { color: var(--chalk); border-bottom-color: var(--blood); font-weight: 600; }
+
+    /* ── GRID ── */
+    .collections-wrap { padding: 4rem 0 6rem; }
+
+    .coll-section { margin-bottom: 5rem; }
+    .coll-section[data-coll]:not([data-coll=""]) { }
+
+    .coll-header {
+      display: flex; align-items: flex-end; justify-content: space-between;
+      gap: 1rem; margin-bottom: 2rem; padding-bottom: 1rem;
+      border-bottom: 2px solid var(--ink); flex-wrap: wrap;
+    }
+    .coll-name {
+      font-family: var(--font-mono); font-size: clamp(1.2rem, 2.5vw, 1.7rem);
+      font-weight: 700; letter-spacing: -0.03em;
+    }
+    .coll-count {
+      font-family: var(--font-mono); font-size: 0.65rem; text-transform: uppercase;
+      letter-spacing: 0.12em; color: var(--ash);
+    }
+    .coll-shop-link {
+      font-family: var(--font-mono); font-size: 0.72rem; text-transform: uppercase;
+      letter-spacing: 0.1em; color: var(--blood);
+      border-bottom: 1px solid var(--blood); padding-bottom: 1px;
+      white-space: nowrap; transition: opacity 0.2s;
+    }
+    .coll-shop-link:hover { opacity: 0.7; }
+
+    /* product grid per collection */
+    .p-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5px;
+      background: var(--ink);
+      border: 1.5px solid var(--ink);
+    }
+    @media (max-width: 960px) { .p-row { grid-template-columns: repeat(3, 1fr); } }
+    @media (max-width: 640px) { .p-row { grid-template-columns: 1fr 1fr; } }
+
+    .p-card {
+      background: var(--chalk); display: flex; flex-direction: column;
+      cursor: pointer; transition: background 0.2s; text-decoration: none; color: inherit;
+    }
+    .p-card:hover { background: var(--bone); }
+
+    .p-card-visual {
+      aspect-ratio: 1; background: var(--concrete);
+      display: flex; align-items: center; justify-content: center;
+      position: relative; overflow: hidden;
+    }
+    .p-card-visual .icon {
+      font-size: 3.5rem; line-height: 1;
+      filter: grayscale(1) brightness(0.8);
+      transition: filter 0.3s, transform 0.3s;
+    }
+    .p-card:hover .p-card-visual .icon { filter: none; transform: scale(1.1); }
+
+    .p-card-info {
+      padding: 0.9rem 1rem 1.1rem;
+      border-top: 1.5px solid var(--ink); flex: 1;
+      display: flex; flex-direction: column;
+    }
+    .p-card-title {
+      font-family: var(--font-mono); font-size: 0.78rem; font-weight: 600;
+      line-height: 1.35; margin-bottom: 0.3rem;
+    }
+    .p-card-desc {
+      font-family: var(--font-serif); font-style: italic; font-size: 0.75rem;
+      color: var(--ash); flex: 1; line-height: 1.4; margin-bottom: 0.7rem;
+    }
+    .p-card-bottom { display: flex; align-items: center; justify-content: space-between; }
+    .p-card-price { font-family: var(--font-mono); font-size: 0.85rem; font-weight: 700; color: var(--blood); }
+    .p-card-arrow {
+      width: 26px; height: 26px; background: var(--ink); color: var(--chalk);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.75rem; transition: background 0.2s;
+    }
+    .p-card:hover .p-card-arrow { background: var(--blood); }
+
+    /* hidden state for filtering */
+    .coll-section.hidden { display: none; }
+
+    /* ── BTN ── */
+    .btn {
+      font-family: var(--font-mono); font-size: 0.78rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.1em; padding: 0.85rem 1.8rem;
+      border: 2px solid var(--ink); cursor: pointer; transition: all 0.25s; display: inline-block;
+    }
+    .btn-solid { background: var(--ink); color: var(--chalk); }
+    .btn-solid:hover { background: var(--blood); border-color: var(--blood); }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--concrete); color: var(--chalk);
+      padding: 3rem 0 2rem; border-top: 2px solid var(--ink);
+    }
+    .footer-bottom {
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 1rem;
+    }
+    .footer-bottom p {
+      font-family: var(--font-mono); font-size: 0.65rem;
+      color: rgba(244,242,238,0.3); letter-spacing: 0.06em;
+    }
+    .footer-links { display: flex; gap: 2rem; }
+    .footer-links a {
+      font-family: var(--font-mono); font-size: 0.7rem; text-transform: uppercase;
+      letter-spacing: 0.1em; color: rgba(244,242,238,0.4); transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--chalk); }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header id="header">
+  <div class="wrap">
+    <div class="header-inner">
+      <a href="index.html" class="logo">
+        <div class="logo-rat">🐀</div>
+        Suburban Vermin
+      </a>
+      <nav>
+        <a href="index.html">Home</a>
+        <a href="collections.html" class="active">Collections</a>
+        <a href="about.html">About</a>
+        <a href="https://suburban-vermin.printify.me/" target="_blank" rel="noopener noreferrer" class="cta">Shop Now</a>
+      </nav>
+      <button class="mob-menu-btn" id="mob-btn" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+  <nav id="mob-nav">
+    <a href="index.html">Home</a>
+    <a href="collections.html">Collections</a>
+    <a href="about.html">About</a>
+    <a href="https://suburban-vermin.printify.me/" target="_blank" rel="noopener noreferrer">Shop Now →</a>
+  </nav>
+</header>
+
+<!-- PAGE HEADER -->
+<div class="page-head">
+  <div class="wrap">
+    <div class="page-head-inner" style="animation: fadeUp 0.8s ease both;">
+      <p class="page-kicker">Browse by Theme</p>
+      <h1 class="page-h1">Collections</h1>
+      <p class="page-sub">Dark humour clothing sorted by exactly what is ruining your life. Choose accordingly.</p>
+    </div>
+  </div>
+  <div class="wrap" style="padding-left:0;padding-right:0;">
+    <div class="filter-bar" id="filter-bar">
+      <button class="filter-btn active" onclick="filterColls('all', this)">All Collections</button>
+      <button class="filter-btn" onclick="filterColls('dull-dad', this)">Dull Dad</button>
+      <button class="filter-btn" onclick="filterColls('england', this)">England Fan</button>
+      <button class="filter-btn" onclick="filterColls('suburban', this)">Suburban Grind</button>
+      <button class="filter-btn" onclick="filterColls('existential', this)">Existential</button>
+      <button class="filter-btn" onclick="filterColls('redundancy', this)">Redundancy</button>
+      <button class="filter-btn" onclick="filterColls('commute', this)">The Commute</button>
+    </div>
+  </div>
+</div>
+
+<!-- COLLECTIONS -->
+<div class="collections-wrap">
+  <div class="wrap">
+
+    <!-- Dull Dad -->
+    <div class="coll-section reveal" data-coll="dull-dad">
+      <div class="coll-header">
+        <div>
+          <h2 class="coll-name">Dull Dad Collection</h2>
+          <p class="coll-count">5 designs</p>
+        </div>
+        <a href="https://suburban-vermin.printify.me/" target="_blank" rel="noopener noreferrer" class="coll-shop-link">Shop All →</a>
+      </div>
+      <div class="p-row">
+        <a href="https://suburban-vermin.printify.me/" target="_blank" rel="noopener noreferrer" class="p-card">
+          <div class="p-card-visual"><span class="icon">📺</span></div>
+          <div class="p-card-info">
+            <p class="p-card-title">Found It — Remote Control</p>
+            <p class="p-card-desc">That's the victory now. That's the win.</p>
+            <div class="p-card-bottom"><span class="p-card-price">£18.52</span><span class="p-card-arrow">→</span></div>
+          </div>
+        </a>
+        <a href="https://suburban-vermin.printify.me/" target="_blank" rel="noopener noreferrer" class="p-card">
+          <div class="p-card-visual"><span class="icon">👓</span></div>
+          <div class="p-card-info">
+            <p class="p-card-title">Found Them — Glasses</p>
+            <p class="p-card-desc">Were on my head the whole time.</p>
+            <div class="p-card-bottom"><span class="p-card-price">£18.52</span><span class="p-card-arrow">→</span></div>
+          </div>
+        </a>
+        <a href="https://suburban-vermin.printify.me/" target="_blank" rel="noopener noreferrer" class="p-card">
+          <div class="p-card-visual"><span class="icon">🔑</span></div>
+          <div class="p-card-info">
+            <p class="p-card-title">Where Are My Keys?</p>
+            <p class="p-card-desc">Still looking. Always looking.</p>
+            <div class="p-card-bottom"><span class="p-card-price">£18.52</span><span class="p-card-arrow">→</span></div>
+          </div>
+        </a>
+        <a href="https://suburban-vermin.printify.me/" target="_blank" rel="noopener noreferrer" class="p-card">
+          <div class="p-card-visual"><span class="icon">🎄</span></div>
+          <div class="p-card-info">
+            <p class="p-card-title">Crying at the John Lewis Ad Again</p>
+            <p class="p-card-desc">I am absolutely fine.</p>
+            <div class="p-card-bottom"><span class="p-card-price">£18.52</span><span class="p-card-arrow">→</span></div>
+          </div>
+        </a>
+        <a href="https://suburban-vermin.printify.me/" target="_blank" rel="noopener noreferrer" class="p-card">
+          <div class="p-card-visual"><span class="icon">🧠</span></div>
+          <div class="p-card-info">
+            <p class="p-card-title">My Brain Is 15 Years Old</p>
+            <p class="p-card-desc">The body disagrees.</p>
+            <div class="p-card-bottom"><span class="p-card-price">£18.52</span><span class="p-card-arrow">→</span></div>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <!-- England Fan -->
+    <div class="coll-section reveal" data-coll="england">
+      <div class="coll-header">
+        <div>
+          <h2 class="coll-name">England Fan Collection</h2>
+          <p class="coll-count">5 designs</p>
+        </div>
+        <a href="https://suburban-vermin.printify.me/" target="_blank" rel="noopener noreferrer" class="coll-shop-link">Shop All →</a>
+      </div>
+      <div class="p-row">
+        <a href="https://suburban-vermin.printify.me/" target="_blank" rel="noopener noreferrer" class="p-card">
+          <div class="p-card-visual"><span class="icon">⚽</span></div>
+          <div class="p-card-info">
+            <p class="p-card-title">My Optimism Is a Form of Self-Harm</p>
+            <p class="p-card-desc">WC26. Same ritual. Same result.</p>
+            <div class="p-card-bottom"><span class="p-card-price">£26.23</span><span class="p-card-arrow">→</span></div>
+          </div>
+        </a>
+        <a href="https://suburban-vermin.printify.me/" target="_blank" rel="noopener noreferrer" class="p-card">
+          <div class="p-card-visual"><span class="icon">🏠</span></div>
+          <div class="p-card-info">
+            <p class="p-card-title">It Was Never Coming Home</p>
+            <p class="p-card-desc">We just weren't ready to hear it.</p>
+            <div class="p-card-bottom"><span class="p-card-price">£18.52</span><span class="p-card-arrow">→</span></div>
+          </div>
+        </a>
+        <a href="https://suburban-vermin.printify.me/" target="_blank" rel="noopener noreferrer" class="p-card">
+          <div class="p-card-visual"><span class="icon">📅</span></div>
+          <div class="p-card-info">
+            <p class="p-card-title">Book Early — It's Happening Again</p>
+            <p class="p-card-desc">You already know how it ends.</p>
+            <div class="p-card-bottom"><span class="p-card-price">£18.52</span><span class="p-card-arrow">→</span></div>
+          </div>
+        </a>
+        <a href="https://suburban-vermin.printify.me/" target="_blank" rel="noopener noreferrer" class="p-card">
+          <div class="p-card-visual"><span class="icon">🏆</span></div>
+          <div class="p-card-info">
+            <p class="p-card-title">WC26: The Wait Continues</p>
+            <p class="p-card-desc">Hope is a pre-existing condition.</p>
+            <div class="p-card-bottom"><span class="p-card-price">£18.52</span><span class="p-card-arrow">→</span></div>
+          </div>
+        </a>
+        <a href="https://suburban-vermin.printify.me/" target="_blank" rel="noopener noreferrer" class="p-card">
+          <div class="p-card-visual"><span class="icon">😶</span></div>
+          <div class="p-card-info">
+            <p class="p-card-title">Brave Face. Again.</p>
+            <p class="p-card-desc">Group stages. Always the group stages.</p>
+            <div class="p-card-bottom"><span class="p-card-price">£18.52</span><span class="p-card-arrow">→</span></div>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <!-- Suburban Grind -->
+    <div class="coll-section reveal" data-coll="suburban">
+      <div class="coll-header">
+        <div>
+          <h2 class="coll-name">Suburban Grind</h2>
+          <p class="coll-count">5 designs</p>
+        </div>
+        <a href="https://suburban-vermin.printify.me/" target="_blank" rel="noopener noreferrer" class="coll-shop-link">Shop All →</a>
+      </div>
+      <div class="p-row">
+        <a href="https://suburban-vermin.printify.me/" target="_blank" rel="noopener noreferrer" class="p-card">
+          <div class="p-card-visual"><span class="icon">🏠</span></div>
+          <div class="p-card-info">
+            <p class="p-card-title">23 Years Remaining</p>
+            <p class="p-card-desc">The house always wins.</p>
+            <div class="p-card-bottom"><span class="p-card-price">£18.52</span><span class="p-card-arrow">→</span></div>
+          </div>
+        </a>
+        <a href="https://suburban-vermin.printify.me/" target="_blank" rel="noopener noreferrer" class="p-card">
+          <div class="p-card-visual"><span class="icon">🚗</span></div>
+          <div class="p-card-info">
+            <p class="p-card-title">M25 Philosopher</p>
+            <p class="p-card-desc">Stuck in motion. Again.</p>
+            <div class="p-card-bottom"><span class="p-card-price">£18.52</span><span class="p-card-arrow">→</span></div>
+          </div>
+        </a>
+        <a href="https://suburban-vermin.printify.me/" target="_blank" rel="noopener noreferrer" class="p-card">
+          <div class="p-card-visual"><span class="icon">🌿</span></div>
+          <div class="p-card-info">
+            <p class="p-card-title">Gardening as Therapy</p>
+            <p class="p-card-desc">The weeds win. The weeds always win.</p>
+            <div class="p-card-bottom"><span class="p-card-price">£18.52</span><span class="p-card-arrow">→</span></div>
+          </div>
+        </a>
+        <a href="https://suburban-vermin.printify.me/" target="_blank" rel="noopener noreferrer" class="p-card">
+          <div class="p-card-visual"><span class="icon">🕐</span></div>
+          <div class="p-card-info">
+            <p class="p-card-title">Quiet Quitting Since 2003</p>
+            <p class="p-card-desc">Before it was fashionable.</p>
+            <div class="p-card-bottom"><span class="p-card-price">£18.52</span><span class="p-card-arrow">→</span></div>
+          </div>
+        </a>
+        <a href="https://suburban-vermin.printify.me/" target="_blank" rel="noopener noreferrer" class="p-card">
+          <div class="p-card-visual"><span class="icon">🧱</span></div>
+          <div class="p-card-info">
+            <p class="p-card-title">This Is Fine (It Isn't)</p>
+            <p class="p-card-desc">The British response to everything.</p>
+            <div class="p-card-bottom"><span class="p-card-price">£18.52</span><span class="p-card-arrow">→</span></div>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <!-- Existential -->
+    <div class="coll-section reveal" data-coll="existential">
+      <div class="coll-header">
+        <div>
+          <h2 class="coll-name">Existential Observations</h2>
+          <p class="coll-count">5 designs</p>
+        </div>
+        <a href="https://suburban-vermin.printify.me/" target="_blank" rel="noopener noreferrer" class="coll-shop-link">Shop All →</a>
+      </div>
+      <div class="p-row">
+        <a href="https://suburban-vermin.printify.me/" target="_blank" rel="noopener noreferrer" class="p-card">
+          <div class="p-card-visual"><span class="icon">📬</span></div>
+          <div class="p-card-info">
+            <p class="p-card-title">The NHS Letter Arrived</p>
+            <p class="p-card-desc">Routine screening. Existential dread.</p>
+            <div class="p-card-bottom"><span class="p-card-price">£18.52</span><span class="p-card-arrow">→</span></div>
+          </div>
+        </a>
+        <a href="https://suburban-vermin.printify.me/" target="_blank" rel="noopener noreferrer" class="p-card">
+          <div class="p-card-visual"><span class="icon">💻</span></div>
+          <div class="p-card-info">
+            <p class="p-card-title">WebMD Is My Life Coach</p>
+            <p class="p-card-desc">Probably terminal. Definitely a muscle.</p>
+            <div class="p-card-bottom"><span class="p-card-price">£18.52</span><span class="p-card-arrow">→</span></div>
+          </div>
+        </a>
+        <a href="https://suburban-vermin.printify.me/" target="_blank" rel="noopener noreferrer" class="p-card">
+          <div class="p-card-visual"><span class="icon">👻</span></div>
+          <div class="p-card-info">
+            <p class="p-card-title">When Did I Become Invisible?</p>
+            <p class="p-card-desc">Somewhere between 42 and 44.</p>
+            <div class="p-card-bottom"><span class="p-card-price">£18.52</span><span class="p-card-arrow">→</span></div>
+          </div>
+        </a>
+        <a href="https://suburban-vermin.printify.me/" target="_blank" rel="noopener noreferrer" class="p-card">
+          <div class="p-card-visual"><span class="icon">😬</span></div>
+          <div class="p-card-info">
+            <p class="p-card-title">Aches I Can't Explain</p>
+            <p class="p-card-desc">The random 4am ones. Always the same.</p>
+            <div class="p-card-bottom"><span class="p-card-price">£18.52</span><span class="p-card-arrow">→</span></div>
+          </div>
+        </a>
+        <a href="https://suburban-vermin.printify.me/" target="_blank" rel="noopener noreferrer" class="p-card">
+          <div class="p-card-visual"><span class="icon">🪑</span></div>
+          <div class="p-card-info">
+            <p class="p-card-title">This Is As Good As It Gets</p>
+            <p class="p-card-desc">Not bitter. Just accurate.</p>
+            <div class="p-card-bottom"><span class="p-card-price">£18.52</span><span class="p-card-arrow">→</span></div>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <!-- Redundancy -->
+    <div class="coll-section reveal" data-coll="redundancy">
+      <div class="coll-header">
+        <div>
+          <h2 class="coll-name">Redundancy Collection</h2>
+          <p class="coll-count">4 designs</p>
+        </div>
+        <a href="https://suburban-vermin.printify.me/" target="_blank" rel="noopener noreferrer" class="coll-shop-link">Shop All →</a>
+      </div>
+      <div class="p-row">
+        <a href="https://suburban-vermin.printify.me/" target="_blank" rel="noopener noreferrer" class="p-card">
+          <div class="p-card-visual"><span class="icon">💼</span></div>
+          <div class="p-card-info">
+            <p class="p-card-title">Restructured at 47</p>
+            <p class="p-card-desc">LinkedIn pivot incoming.</p>
+            <div class="p-card-bottom"><span class="p-card-price">£18.52</span><span class="p-card-arrow">→</span></div>
+          </div>
+        </a>
+        <a href="https://suburban-vermin.printify.me/" target="_blank" rel="noopener noreferrer" class="p-card">
+          <div class="p-card-visual"><span class="icon">🖨️</span></div>
+          <div class="p-card-info">
+            <p class="p-card-title">My LinkedIn Headline Means Nothing</p>
+            <p class="p-card-desc">Results-driven. Passion for synergy.</p>
+            <div class="p-card-bottom"><span class="p-card-price">£18.52</span><span class="p-card-arrow">→</span></div>
+          </div>
+        </a>
+        <a href="https://suburban-vermin.printify.me/" target="_blank" rel="noopener noreferrer" class="p-card">
+          <div class="p-card-visual"><span class="icon">📉</span></div>
+          <div class="p-card-info">
+            <p class="p-card-title">Middle Management Trap</p>
+            <p class="p-card-desc">Too experienced to leave. Too junior to matter.</p>
+            <div class="p-card-bottom"><span class="p-card-price">£18.52</span><span class="p-card-arrow">→</span></div>
+          </div>
+        </a>
+        <a href="https://suburban-vermin.printify.me/" target="_blank" rel="noopener noreferrer" class="p-card">
+          <div class="p-card-visual"><span class="icon">😐</span></div>
+          <div class="p-card-info">
+            <p class="p-card-title">I Report to Someone Younger Than Me Now</p>
+            <p class="p-card-desc">It's fine. Everything's fine.</p>
+            <div class="p-card-bottom"><span class="p-card-price">£18.52</span><span class="p-card-arrow">→</span></div>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <!-- The Commute -->
+    <div class="coll-section reveal" data-coll="commute">
+      <div class="coll-header">
+        <div>
+          <h2 class="coll-name">The Commute</h2>
+          <p class="coll-count">4 designs</p>
+        </div>
+        <a href="https://suburban-vermin.printify.me/" target="_blank" rel="noopener noreferrer" class="coll-shop-link">Shop All →</a>
+      </div>
+      <div class="p-row">
+        <a href="https://suburban-vermin.printify.me/" target="_blank" rel="noopener noreferrer" class="p-card">
+          <div class="p-card-visual"><span class="icon">🚇</span></div>
+          <div class="p-card-info">
+            <p class="p-card-title">The 6:42 to Victoria</p>
+            <p class="p-card-desc">47 minutes. Same faces. Every morning.</p>
+            <div class="p-card-bottom"><span class="p-card-price">£18.52</span><span class="p-card-arrow">→</span></div>
+          </div>
+        </a>
+        <a href="https://suburban-vermin.printify.me/" target="_blank" rel="noopener noreferrer" class="p-card">
+          <div class="p-card-visual"><span class="icon">⚠️</span></div>
+          <div class="p-card-info">
+            <p class="p-card-title">Delays Due to a Person</p>
+            <p class="p-card-desc">The announcement you never get used to.</p>
+            <div class="p-card-bottom"><span class="p-card-price">£18.52</span><span class="p-card-arrow">→</span></div>
+          </div>
+        </a>
+        <a href="https://suburban-vermin.printify.me/" target="_blank" rel="noopener noreferrer" class="p-card">
+          <div class="p-card-visual"><span class="icon">🚗</span></div>
+          <div class="p-card-info">
+            <p class="p-card-title">M25 Philosopher</p>
+            <p class="p-card-desc">The great questions, in traffic, again.</p>
+            <div class="p-card-bottom"><span class="p-card-price">£18.52</span><span class="p-card-arrow">→</span></div>
+          </div>
+        </a>
+        <a href="https://suburban-vermin.printify.me/" target="_blank" rel="noopener noreferrer" class="p-card">
+          <div class="p-card-visual"><span class="icon">☕</span></div>
+          <div class="p-card-info">
+            <p class="p-card-title">Running on Spite and Costa</p>
+            <p class="p-card-desc">The commuter's fuel since 1995.</p>
+            <div class="p-card-bottom"><span class="p-card-price">£18.52</span><span class="p-card-arrow">→</span></div>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="reveal" style="text-align:center; padding-top: 2rem;">
+      <p style="font-family: var(--font-serif); font-style:italic; color: var(--ash); margin-bottom:1.5rem;">
+        All designs available in all sizes. Free delivery on orders over £35.
+      </p>
+      <a href="https://suburban-vermin.printify.me/" target="_blank" rel="noopener noreferrer" class="btn btn-solid">Browse the Full Store</a>
+    </div>
+
+  </div><!-- .wrap -->
+</div><!-- .collections-wrap -->
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <div class="footer-bottom">
+      <p>© 2026 Suburban Vermin. All designs protected.</p>
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="https://suburban-vermin.printify.me/" target="_blank" rel="noopener noreferrer">Store</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  /* Header */
+  const header = document.getElementById('header');
+  window.addEventListener('scroll', () => header.classList.toggle('scrolled', window.scrollY > 80));
+
+  /* Mobile nav */
+  const mobBtn = document.getElementById('mob-btn');
+  const mobNav = document.getElementById('mob-nav');
+  mobBtn.addEventListener('click', () => {
+    const open = mobNav.classList.toggle('open');
+    mobBtn.classList.toggle('open', open);
+  });
+
+  /* Reveal on scroll */
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  /* Filter */
+  function filterColls(id, btn) {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.coll-section').forEach(s => {
+      if (id === 'all' || s.dataset.coll === id) {
+        s.classList.remove('hidden');
+      } else {
+        s.classList.add('hidden');
+      }
+    });
+  }
+</script>
+</body>
+</html>
